@@ -3,19 +3,28 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6513FC54263233E20094A6C2 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 6513FC53263233E20094A6C2 /* SwiftUICharts */; };
+		6513FC57263239570094A6C2 /* PracticeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513FC56263239570094A6C2 /* PracticeModel.swift */; };
+		6514C8CF2633E1CB007737D9 /* BarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514C8CE2633E1CB007737D9 /* BarChart.swift */; };
 		6528D118262E033D002C13E4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6528D117262E033D002C13E4 /* AppDelegate.swift */; };
 		6528D11A262E033D002C13E4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6528D119262E033D002C13E4 /* SceneDelegate.swift */; };
 		6528D11C262E033D002C13E4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6528D11B262E033D002C13E4 /* ContentView.swift */; };
 		6528D11E262E033E002C13E4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6528D11D262E033E002C13E4 /* Assets.xcassets */; };
 		6528D121262E033E002C13E4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6528D120262E033E002C13E4 /* Preview Assets.xcassets */; };
 		6528D124262E033E002C13E4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6528D122262E033E002C13E4 /* LaunchScreen.storyboard */; };
+		6528D132262E0596002C13E4 /* CustomTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6528D131262E0596002C13E4 /* CustomTabs.swift */; };
+		6528D147262E3999002C13E4 /* PracticeLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6528D146262E3999002C13E4 /* PracticeLogView.swift */; };
+		6528D14A262F52B4002C13E4 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6528D149262F52B4002C13E4 /* HomeView.swift */; };
+		659259472633680B00670980 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659259462633680B00670980 /* CardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6513FC56263239570094A6C2 /* PracticeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeModel.swift; sourceTree = "<group>"; };
+		6514C8CE2633E1CB007737D9 /* BarChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChart.swift; sourceTree = "<group>"; };
 		6528D114262E033D002C13E4 /* PianoFly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PianoFly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6528D117262E033D002C13E4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6528D119262E033D002C13E4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +33,10 @@
 		6528D120262E033E002C13E4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		6528D123262E033E002C13E4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6528D125262E033E002C13E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6528D131262E0596002C13E4 /* CustomTabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabs.swift; sourceTree = "<group>"; };
+		6528D146262E3999002C13E4 /* PracticeLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeLogView.swift; sourceTree = "<group>"; };
+		6528D149262F52B4002C13E4 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		659259462633680B00670980 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6513FC54263233E20094A6C2 /* SwiftUICharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,11 +72,12 @@
 			children = (
 				6528D117262E033D002C13E4 /* AppDelegate.swift */,
 				6528D119262E033D002C13E4 /* SceneDelegate.swift */,
-				6528D11B262E033D002C13E4 /* ContentView.swift */,
+				6528D12F262E057D002C13E4 /* Views */,
 				6528D11D262E033E002C13E4 /* Assets.xcassets */,
 				6528D122262E033E002C13E4 /* LaunchScreen.storyboard */,
 				6528D125262E033E002C13E4 /* Info.plist */,
 				6528D11F262E033E002C13E4 /* Preview Content */,
+				6513FC56263239570094A6C2 /* PracticeModel.swift */,
 			);
 			path = PianoFly;
 			sourceTree = "<group>";
@@ -73,6 +88,19 @@
 				6528D120262E033E002C13E4 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		6528D12F262E057D002C13E4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6528D11B262E033D002C13E4 /* ContentView.swift */,
+				6528D149262F52B4002C13E4 /* HomeView.swift */,
+				6528D131262E0596002C13E4 /* CustomTabs.swift */,
+				6528D146262E3999002C13E4 /* PracticeLogView.swift */,
+				659259462633680B00670980 /* CardView.swift */,
+				6514C8CE2633E1CB007737D9 /* BarChart.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -91,6 +119,9 @@
 			dependencies = (
 			);
 			name = PianoFly;
+			packageProductDependencies = (
+				6513FC53263233E20094A6C2 /* SwiftUICharts */,
+			);
 			productName = PianoFly;
 			productReference = 6528D114262E033D002C13E4 /* PianoFly.app */;
 			productType = "com.apple.product-type.application";
@@ -118,6 +149,9 @@
 				Base,
 			);
 			mainGroup = 6528D10B262E033D002C13E4;
+			packageReferences = (
+				6513FC52263233E20094A6C2 /* XCRemoteSwiftPackageReference "ChartView" */,
+			);
 			productRefGroup = 6528D115262E033D002C13E4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -145,8 +179,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6528D147262E3999002C13E4 /* PracticeLogView.swift in Sources */,
+				6514C8CF2633E1CB007737D9 /* BarChart.swift in Sources */,
+				6528D132262E0596002C13E4 /* CustomTabs.swift in Sources */,
 				6528D118262E033D002C13E4 /* AppDelegate.swift in Sources */,
+				6513FC57263239570094A6C2 /* PracticeModel.swift in Sources */,
+				6528D14A262F52B4002C13E4 /* HomeView.swift in Sources */,
 				6528D11A262E033D002C13E4 /* SceneDelegate.swift in Sources */,
+				659259472633680B00670980 /* CardView.swift in Sources */,
 				6528D11C262E033D002C13E4 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -345,6 +385,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6513FC52263233E20094A6C2 /* XCRemoteSwiftPackageReference "ChartView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AppPear/ChartView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6513FC53263233E20094A6C2 /* SwiftUICharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6513FC52263233E20094A6C2 /* XCRemoteSwiftPackageReference "ChartView" */;
+			productName = SwiftUICharts;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6528D10C262E033D002C13E4 /* Project object */;
 }
