@@ -43,7 +43,7 @@ struct CustomTabs: View {
             
             Button(action: {
                 // toggle practice view
-                withAnimation(Animation.easeInOut(duration: 0.5)) {
+                withAnimation(Animation.spring()) {
                     isShowingPracticeLogView = true
                 }
                 
@@ -51,6 +51,7 @@ struct CustomTabs: View {
             }) {
                 Image(systemName: "plus.circle.fill")
                     .font(.system(size: 45))
+                    .foregroundColor(Color(#colorLiteral(red: 0.3411764706, green: 0.2901960784, blue: 0.8862745098, alpha: 1)))
                     
             }
             .offset(y: -25)

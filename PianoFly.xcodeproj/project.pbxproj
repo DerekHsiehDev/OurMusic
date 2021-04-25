@@ -20,6 +20,8 @@
 		6528D147262E3999002C13E4 /* PracticeLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6528D146262E3999002C13E4 /* PracticeLogView.swift */; };
 		6528D14A262F52B4002C13E4 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6528D149262F52B4002C13E4 /* HomeView.swift */; };
 		659259472633680B00670980 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659259462633680B00670980 /* CardView.swift */; };
+		65BC65C92634EAB8002A3653 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC65C82634EAB8002A3653 /* SignupView.swift */; };
+		65BC65CC2634EE59002A3653 /* Pacifico-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 65BC65CB2634EE59002A3653 /* Pacifico-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +39,8 @@
 		6528D146262E3999002C13E4 /* PracticeLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeLogView.swift; sourceTree = "<group>"; };
 		6528D149262F52B4002C13E4 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		659259462633680B00670980 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		65BC65C82634EAB8002A3653 /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
+		65BC65CB2634EE59002A3653 /* Pacifico-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pacifico-Regular.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +76,7 @@
 			children = (
 				6528D117262E033D002C13E4 /* AppDelegate.swift */,
 				6528D119262E033D002C13E4 /* SceneDelegate.swift */,
+				65BC65CB2634EE59002A3653 /* Pacifico-Regular.ttf */,
 				6528D12F262E057D002C13E4 /* Views */,
 				6528D11D262E033E002C13E4 /* Assets.xcassets */,
 				6528D122262E033E002C13E4 /* LaunchScreen.storyboard */,
@@ -99,6 +104,7 @@
 				6528D146262E3999002C13E4 /* PracticeLogView.swift */,
 				659259462633680B00670980 /* CardView.swift */,
 				6514C8CE2633E1CB007737D9 /* BarChart.swift */,
+				65BC65C82634EAB8002A3653 /* SignupView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -167,6 +173,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6528D124262E033E002C13E4 /* LaunchScreen.storyboard in Resources */,
+				65BC65CC2634EE59002A3653 /* Pacifico-Regular.ttf in Resources */,
 				6528D121262E033E002C13E4 /* Preview Assets.xcassets in Resources */,
 				6528D11E262E033E002C13E4 /* Assets.xcassets in Resources */,
 			);
@@ -183,6 +190,7 @@
 				6514C8CF2633E1CB007737D9 /* BarChart.swift in Sources */,
 				6528D132262E0596002C13E4 /* CustomTabs.swift in Sources */,
 				6528D118262E033D002C13E4 /* AppDelegate.swift in Sources */,
+				65BC65C92634EAB8002A3653 /* SignupView.swift in Sources */,
 				6513FC57263239570094A6C2 /* PracticeModel.swift in Sources */,
 				6528D14A262F52B4002C13E4 /* HomeView.swift in Sources */,
 				6528D11A262E033D002C13E4 /* SceneDelegate.swift in Sources */,

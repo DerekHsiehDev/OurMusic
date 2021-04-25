@@ -12,6 +12,7 @@ struct ContentView: View {
     @State var index = 0
     @State var isShowingPracticeLogView = false
     @StateObject var practiceModel = PracticeModel()
+    @AppStorage("isLoggedIn") var isLoggedIn = false
     
     var body: some View {
      
@@ -38,6 +39,10 @@ struct ContentView: View {
             PracticeLogView(isShowing: $isShowingPracticeLogView, practiceModel: practiceModel)
                 .offset(y: isShowingPracticeLogView ? 0 : UIScreen.main.bounds.height * 3)
                 .edgesIgnoringSafeArea(.horizontal)
+            
+            
+            SignUpView()
+                .offset(y: isLoggedIn ? -UIScreen.main.bounds.height * 3 : 0)
                 
         }
         .statusBar(hidden: true)

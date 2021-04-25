@@ -179,12 +179,13 @@ struct HomeView: View {
 
                 ScrollView(.horizontal, showsIndicators: false) {
                     
-                    HStack {
+                    HStack(spacing: 30) {
                         ForEach(practiceModel.pieces, id: \.self) { piece in
                             CardView(piece: piece)
                                 
                         }
                     }
+                    .padding()
                     .padding()
                     
                 }

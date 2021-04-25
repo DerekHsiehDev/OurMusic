@@ -12,6 +12,7 @@ struct PracticeLogView: View {
     @State var progress : CGFloat = 0
     @StateObject var practiceModel: PracticeModel
     
+    
     var body: some View {
         
             
@@ -76,12 +77,25 @@ struct PracticeLogView: View {
             }
             .padding(.vertical, 35)
             .padding(.bottom, 35)
-            .background(Color.black.edgesIgnoringSafeArea(.vertical))
+            
+            .background(
+                Color.black.edgesIgnoringSafeArea(.vertical)
+
+            )
+            
+          
         
          
                 
                 
         
+    }
+}
+
+struct PracticeLogViewPreview: PreviewProvider {
+    static var previews: some View {
+        PracticeLogView(isShowing: .constant(true), practiceModel: PracticeModel())
+            
     }
 }
 
@@ -120,7 +134,10 @@ struct CircularSlider : View {
                     .offset(x: size / 2)
                     .rotationEffect(.init(degrees: angle))
                 // adding gesture...
-                    .gesture(DragGesture().onChanged(onDrag(value:)))
+                    .gesture(DragGesture().onChanged({ value in
+                        simpleSuccess();
+                        onDrag(value: value)
+                    }))
                     .rotationEffect(.init(degrees: -90))
                 
                 
@@ -137,6 +154,12 @@ struct CircularSlider : View {
             }
         }
     }
+    
+    func simpleSuccess() {
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred(intensity: 0.8)
+    }
+    
     
     func convertMinutesToHoursAndMinutes(minutes: String) -> String {
         let hours = Int(minutes)! / 60

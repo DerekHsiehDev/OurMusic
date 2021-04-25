@@ -61,6 +61,7 @@ struct BarChart_Previews: PreviewProvider {
 
 
 struct BarView: View {
+
     @Binding var selectedTime: CGFloat
     @Binding var selectedIndex: Int
     let date: Int
@@ -84,16 +85,23 @@ struct BarView: View {
             if selectedIndex == date {
                 withAnimation(.linear(duration: 0.2)) {
                     self.selectedIndex = -1
+                    tappedImpact()
                 }
             } else {
                 withAnimation(.linear(duration: 0.2)) {
                     self.selectedTime = val
                     self.selectedIndex = date
+                    tappedImpact()
                 }
             }
             
           
      
         }
+    }
+    
+    func tappedImpact() {
+        let generator = UIImpactFeedbackGenerator(style: .heavy)
+        generator.impactOccurred()
     }
 }
