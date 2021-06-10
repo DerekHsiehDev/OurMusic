@@ -21,6 +21,21 @@ class SignInWithEmail {
     
     // MARK: PUBLIC FUNCTIONS
     
+    func signOutWithEmail(handler: @escaping(_ isFinished: Bool) -> ()) {
+        do {
+            try Auth.auth().signOut()
+        } catch let signOutError as NSError {
+            print("ERROR SIGNING OUT \(signOutError.localizedDescription)")
+        }
+        
+        // delay for 0.3 seconds so ui can catch up
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.wipeUserDefaultsForUser()
+            handler(true)
+            return
+        }
+    }
+    
     func signInExistingUserWithEmail(email: String, password: String, handler: @escaping(_ isError: Bool, _ alertMessage: String?) -> ()) {
         
         // firebase sign in w email
@@ -138,9 +153,15 @@ class SignInWithEmail {
             }
             handler(true)
         }
-      
-        
-        
+ 
+    }
+    
+    private func wipeUserDefaultsForUser() {
+        // loop through all userdefaults and delete keys
+        let defaultsDictionary = UserDefaults.standard.dictionaryRepresentation()
+        defaultsDictionary.keys.forEach { key in
+            UserDefaults.standard.removeObject(forKey: key)
+        }
     }
     
 }

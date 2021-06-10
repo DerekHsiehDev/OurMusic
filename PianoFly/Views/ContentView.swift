@@ -33,9 +33,10 @@ struct ContentView: View {
                         
                         Color.green
                             .opacity(self.index == 1 ? 1 : 0)
-                            .opacity(self.index == 1 ? 1 : 0)
+                      
                         
-                        
+                        SettingsView(index: $index)
+                            .opacity(self.index == 3 ? 1 : 0)
                             
                     }
                     .padding(.bottom, -35)
