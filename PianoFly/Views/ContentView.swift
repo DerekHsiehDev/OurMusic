@@ -12,11 +12,16 @@ struct ContentView: View {
     @State var index = 0
     @State var isShowingPracticeLogView = false
     @StateObject var practiceModel = PracticeModel()
-    @AppStorage("isLoggedIn") var isLoggedIn = false
+    @AppStorage(CurrentUserDefaults.userID) var userID: String?
     
     var body: some View {
      
-       if isLoggedIn {
+        if userID == nil {
+            SignUpView()
+                .statusBar(hidden: true)
+        } else {
+         
+            
             ZStack(alignment: .top) {
                 VStack(spacing: 0) {
                     ZStack {
@@ -45,9 +50,6 @@ struct ContentView: View {
                     
             }
             .statusBar(hidden: true)
-        } else {
-            SignUpView()
-                .statusBar(hidden: true)
         }
         
        

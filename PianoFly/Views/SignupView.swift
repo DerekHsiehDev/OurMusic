@@ -10,7 +10,6 @@ import SwiftUI
 import FirebaseAuth
 import FirebaseFirestore
 
-let db = Firestore.firestore()
 
 struct SignUpView: View {
   
@@ -108,6 +107,8 @@ struct Home : View {
             if self.index == 0 {
                 
                 Login()
+                
+                Spacer(minLength: 0)
             }
             else{
                 
@@ -227,6 +228,7 @@ struct Login : View {
             .background(Color.white)
             .cornerRadius(10)
             .padding(.top, 25)
+            
             
             
             Button(action: {
@@ -416,26 +418,12 @@ struct SignUp : View {
         else if pass != repass {
             self.alert = "Passwords do not match"
         } else {
-            Auth.auth().createUser(withEmail: self.mail, password: self.pass) { (user, error) in
-                if let error = error {
-                    self.alert = error.localizedDescription
-                }
-                let userId = Auth.auth().currentUser?.uid
-                
-                db.collection("Users").document("\(String(describing: userId))").setData([
-                        "first": firstN,
-                        "last": lastN,
-                    
-                    ]
-                ) { err in
-                    if let err = err {
-                        print("Error writing document: \(err.localizedDescription)")
-                      } else {
-                        print("user doc created with id: \(String(describing: userId))")
-                        self.isLoggedIn = true
-                      }
+            SignInWithEmail.instance.createNewUserUsingEmail(mail: mail, password: pass, firstName: firstN, lastName: lastN) { isError, alertMessage in
+                if isError {
+                    self.alert = alertMessage ?? ""
                 }
             }
+         
         }
     }
 }
