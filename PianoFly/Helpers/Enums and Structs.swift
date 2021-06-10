@@ -13,3 +13,9 @@ struct CurrentUserDefaults {
     static let lastName = "last_name"
     static let email = "email"
 }
+
+struct DatabaseUserField {
+    static let firstName = "firstN"
+    static let lastName = "lastN"
+    static let email = "email"
+}

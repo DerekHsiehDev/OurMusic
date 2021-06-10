@@ -168,7 +168,7 @@ struct Home : View {
 }
 
 struct Login : View {
-    @AppStorage("isLoggedIn") var isLoggedIn = false
+    
     @State var mail = ""
     @State var pass = ""
     @State var showPass = false
@@ -263,7 +263,13 @@ struct Login : View {
         else if !mail.isValidEmail() {
             self.alert = "Please enter a valid email"
         } else {
-            self.alert = ""
+            SignInWithEmail.instance.signInExistingUserWithEmail(email: mail, password: pass) { isError, returnedAlertMessage in
+                if isError {
+                    self.alert = returnedAlertMessage ?? ""
+                } else {
+                    return
+                }
+            }
         }
     }
 }
