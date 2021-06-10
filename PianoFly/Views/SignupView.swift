@@ -182,6 +182,7 @@ struct Login : View {
             VStack{
                 Text(alert)
                     .foregroundColor(.red)
+                    .lineLimit(nil)
                 
                 HStack(spacing: 15){
                     
@@ -289,6 +290,7 @@ struct SignUp : View {
                 
                 Text(alert)
                     .foregroundColor(.red)
+                    .lineLimit(nil)
                 
                 HStack(spacing: 15){
                     
