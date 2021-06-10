@@ -7,43 +7,30 @@
 
 
 import SwiftUI
+import FirebaseAuth
+import FirebaseFirestore
+
+let db = Firestore.firestore()
 
 struct SignUpView: View {
-    @AppStorage("isLoggedIn") var isLoggedIn = false
+  
     
     var body: some View {
         
-        ZStack(alignment: .top) {
+        ZStack(alignment: .bottom) {
             
-            LinearGradient(gradient: .init(colors: [Color(#colorLiteral(red: 0.5647058824, green: 0.5058823529, blue: 0.9529411765, alpha: 1)), Color(#colorLiteral(red: 0.3411764706, green: 0.2901960784, blue: 0.8862745098, alpha: 1))]), startPoint: .top, endPoint: .bottom).edgesIgnoringSafeArea(.all)
-            
-            
-                
-                Text("Piano Fly")
-                    .font(Font.custom("Pacifico-Regular", size: 60))
-                    .foregroundColor(.white)
-                    .padding(.top, 35)
+            LinearGradient(gradient: .init(colors: [Color(#colorLiteral(red: 0.5647058824, green: 0.5058823529, blue: 0.9529411765, alpha: 1)), Color(#colorLiteral(red: 0.3411764706, green: 0.2901960784, blue: 0.8862745098, alpha: 1))]), startPoint: .top, endPoint: .bottom).edgesIgnoringSafeArea(.vertical)
             
             
             
-                
-                
-                if UIScreen.main.bounds.height > 800{
-                    
-                    Home()
-                }
-                else{
-                    
-                    ScrollView(.vertical, showsIndicators: false) {
-                        
-                        Home()
-                    }
-                }
+                Home()
 
             
             
         }
+        
     }
+        
 }
 
 struct SignUpViewPreview: PreviewProvider {
@@ -54,15 +41,23 @@ struct SignUpViewPreview: PreviewProvider {
 
 struct Home : View {
     
-    @State var index = 1
+    @State var index = 0
     
     var body : some View{
         
-        VStack{
+        VStack {
             
-            Image("logo")
-            .resizable()
-            .frame(width: 200, height: 180)
+            
+            if index == 0 {
+                Image("Rounded Logo")
+                    .resizable()
+                    .frame(width: 150, height: 150)
+                    .shadow(color: Color.black.opacity(0.7), radius: 3, x: 0, y: 0)
+                
+                Spacer()
+            }
+            
+        
             
             HStack{
                 
@@ -71,9 +66,11 @@ struct Home : View {
                 Button(action: {
                     
                     withAnimation(.spring(response: 0.8, dampingFraction: 0.5, blendDuration: 0.5)){
-                        
+
                        self.index = 0
                     }
+                    
+                
                     
                 }) {
                     
@@ -108,7 +105,7 @@ struct Home : View {
             .clipShape(Capsule())
             .padding(.top, 25)
             
-            if self.index == 0{
+            if self.index == 0 {
                 
                 Login()
             }
@@ -117,7 +114,7 @@ struct Home : View {
                 SignUp()
             }
             
-            if self.index == 0{
+            if self.index == 0 {
                 
                 Button(action: {
                     
@@ -170,7 +167,7 @@ struct Home : View {
 }
 
 struct Login : View {
-    
+    @AppStorage("isLoggedIn") var isLoggedIn = false
     @State var mail = ""
     @State var pass = ""
     @State var showPass = false
@@ -269,14 +266,13 @@ struct Login : View {
 }
 
 struct SignUp : View {
-    
+    @AppStorage("isLoggedIn") var isLoggedIn = false
     @State var mail = ""
     @State var pass = ""
     @State var repass = ""
     @State var firstN = ""
     @State var lastN = ""
     @State var showPass = false
-    @State var showReenter = false
     @State var alert = ""
     
     
@@ -344,7 +340,7 @@ struct SignUp : View {
                     }) {
                         
                         Image(systemName: "eye")
-                            .foregroundColor(.black)
+                            .foregroundColor(showPass ? .gray : .black)
                     }
                     
                 }.padding(.vertical, 20)
@@ -358,7 +354,7 @@ struct SignUp : View {
                     .frame(width: 15, height: 18)
                     .foregroundColor(.black)
                     
-                    if showReenter {
+                    if showPass {
                         TextField("Re-Enter", text: self.$repass)
                     } else {
                         SecureField("Re-Enter", text: self.$repass)
@@ -367,11 +363,11 @@ struct SignUp : View {
                     
                     
                     Button(action: {
-                        showReenter.toggle()
+                        showPass.toggle()
                     }) {
                         
                         Image(systemName: "eye")
-                            .foregroundColor(.black)
+                            .foregroundColor(showPass ? .gray : .black)
                     }
                     
                 }.padding(.vertical, 20)
@@ -420,7 +416,26 @@ struct SignUp : View {
         else if pass != repass {
             self.alert = "Passwords do not match"
         } else {
-            self.alert = ""
+            Auth.auth().createUser(withEmail: self.mail, password: self.pass) { (user, error) in
+                if let error = error {
+                    self.alert = error.localizedDescription
+                }
+                let userId = Auth.auth().currentUser?.uid
+                
+                db.collection("Users").document("\(String(describing: userId))").setData([
+                        "first": firstN,
+                        "last": lastN,
+                    
+                    ]
+                ) { err in
+                    if let err = err {
+                        print("Error writing document: \(err.localizedDescription)")
+                      } else {
+                        print("user doc created with id: \(String(describing: userId))")
+                        self.isLoggedIn = true
+                      }
+                }
+            }
         }
     }
 }

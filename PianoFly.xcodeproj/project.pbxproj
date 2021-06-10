@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6513FC54263233E20094A6C2 /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 6513FC53263233E20094A6C2 /* SwiftUICharts */; };
+		14A5CC99A4DC613903BB13E5 /* Pods_PianoFly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13FDF385726747C0AEA868C3 /* Pods_PianoFly.framework */; };
 		6513FC57263239570094A6C2 /* PracticeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513FC56263239570094A6C2 /* PracticeModel.swift */; };
 		6514C8CF2633E1CB007737D9 /* BarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6514C8CE2633E1CB007737D9 /* BarChart.swift */; };
 		6528D118262E033D002C13E4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6528D117262E033D002C13E4 /* AppDelegate.swift */; };
@@ -19,12 +19,18 @@
 		6528D132262E0596002C13E4 /* CustomTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6528D131262E0596002C13E4 /* CustomTabs.swift */; };
 		6528D147262E3999002C13E4 /* PracticeLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6528D146262E3999002C13E4 /* PracticeLogView.swift */; };
 		6528D14A262F52B4002C13E4 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6528D149262F52B4002C13E4 /* HomeView.swift */; };
+		657043E8267285E8004D6005 /* SignInWithEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 657043E7267285E8004D6005 /* SignInWithEmail.swift */; };
 		659259472633680B00670980 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659259462633680B00670980 /* CardView.swift */; };
+		65BA7C93263502DF008F18BA /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = 65BA7C92263502DF008F18BA /* SwiftUICharts */; };
+		65BA7C9626350435008F18BA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 65BA7C9526350435008F18BA /* GoogleService-Info.plist */; };
 		65BC65C92634EAB8002A3653 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC65C82634EAB8002A3653 /* SignupView.swift */; };
 		65BC65CC2634EE59002A3653 /* Pacifico-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 65BC65CB2634EE59002A3653 /* Pacifico-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		13FDF385726747C0AEA868C3 /* Pods_PianoFly.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PianoFly.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		23A8C15EE58F586BB8578528 /* Pods-PianoFly.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PianoFly.release.xcconfig"; path = "Target Support Files/Pods-PianoFly/Pods-PianoFly.release.xcconfig"; sourceTree = "<group>"; };
+		3DC776C3F7251F74EF9822CF /* Pods-PianoFly.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PianoFly.debug.xcconfig"; path = "Target Support Files/Pods-PianoFly/Pods-PianoFly.debug.xcconfig"; sourceTree = "<group>"; };
 		6513FC56263239570094A6C2 /* PracticeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeModel.swift; sourceTree = "<group>"; };
 		6514C8CE2633E1CB007737D9 /* BarChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChart.swift; sourceTree = "<group>"; };
 		6528D114262E033D002C13E4 /* PianoFly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PianoFly.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -38,7 +44,9 @@
 		6528D131262E0596002C13E4 /* CustomTabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabs.swift; sourceTree = "<group>"; };
 		6528D146262E3999002C13E4 /* PracticeLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeLogView.swift; sourceTree = "<group>"; };
 		6528D149262F52B4002C13E4 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		657043E7267285E8004D6005 /* SignInWithEmail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithEmail.swift; sourceTree = "<group>"; };
 		659259462633680B00670980 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		65BA7C9526350435008F18BA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		65BC65C82634EAB8002A3653 /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
 		65BC65CB2634EE59002A3653 /* Pacifico-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pacifico-Regular.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -48,18 +56,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6513FC54263233E20094A6C2 /* SwiftUICharts in Frameworks */,
+				14A5CC99A4DC613903BB13E5 /* Pods_PianoFly.framework in Frameworks */,
+				65BA7C93263502DF008F18BA /* SwiftUICharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		490EEDB4838A5B2EAA72AF51 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				13FDF385726747C0AEA868C3 /* Pods_PianoFly.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		6528D10B262E033D002C13E4 = {
 			isa = PBXGroup;
 			children = (
 				6528D116262E033D002C13E4 /* PianoFly */,
 				6528D115262E033D002C13E4 /* Products */,
+				83D2F87673AADCC673F7DED0 /* Pods */,
+				490EEDB4838A5B2EAA72AF51 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -74,8 +93,10 @@
 		6528D116262E033D002C13E4 /* PianoFly */ = {
 			isa = PBXGroup;
 			children = (
+				657043E5267285B3004D6005 /* Firebase */,
 				6528D117262E033D002C13E4 /* AppDelegate.swift */,
 				6528D119262E033D002C13E4 /* SceneDelegate.swift */,
+				65BA7C9526350435008F18BA /* GoogleService-Info.plist */,
 				65BC65CB2634EE59002A3653 /* Pacifico-Regular.ttf */,
 				6528D12F262E057D002C13E4 /* Views */,
 				6528D11D262E033E002C13E4 /* Assets.xcassets */,
@@ -109,6 +130,31 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		657043E5267285B3004D6005 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				657043E6267285CE004D6005 /* Signin Providers */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
+		657043E6267285CE004D6005 /* Signin Providers */ = {
+			isa = PBXGroup;
+			children = (
+				657043E7267285E8004D6005 /* SignInWithEmail.swift */,
+			);
+			path = "Signin Providers";
+			sourceTree = "<group>";
+		};
+		83D2F87673AADCC673F7DED0 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3DC776C3F7251F74EF9822CF /* Pods-PianoFly.debug.xcconfig */,
+				23A8C15EE58F586BB8578528 /* Pods-PianoFly.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -116,9 +162,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6528D128262E033E002C13E4 /* Build configuration list for PBXNativeTarget "PianoFly" */;
 			buildPhases = (
+				5C6366DAB3536A52687EB740 /* [CP] Check Pods Manifest.lock */,
 				6528D110262E033D002C13E4 /* Sources */,
 				6528D111262E033D002C13E4 /* Frameworks */,
 				6528D112262E033D002C13E4 /* Resources */,
+				0FDB3D1542DF9CA6451EE2DD /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -126,7 +174,7 @@
 			);
 			name = PianoFly;
 			packageProductDependencies = (
-				6513FC53263233E20094A6C2 /* SwiftUICharts */,
+				65BA7C92263502DF008F18BA /* SwiftUICharts */,
 			);
 			productName = PianoFly;
 			productReference = 6528D114262E033D002C13E4 /* PianoFly.app */;
@@ -156,7 +204,7 @@
 			);
 			mainGroup = 6528D10B262E033D002C13E4;
 			packageReferences = (
-				6513FC52263233E20094A6C2 /* XCRemoteSwiftPackageReference "ChartView" */,
+				65BA7C91263502DF008F18BA /* XCRemoteSwiftPackageReference "ChartView" */,
 			);
 			productRefGroup = 6528D115262E033D002C13E4 /* Products */;
 			projectDirPath = "";
@@ -174,12 +222,55 @@
 			files = (
 				6528D124262E033E002C13E4 /* LaunchScreen.storyboard in Resources */,
 				65BC65CC2634EE59002A3653 /* Pacifico-Regular.ttf in Resources */,
+				65BA7C9626350435008F18BA /* GoogleService-Info.plist in Resources */,
 				6528D121262E033E002C13E4 /* Preview Assets.xcassets in Resources */,
 				6528D11E262E033E002C13E4 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0FDB3D1542DF9CA6451EE2DD /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PianoFly/Pods-PianoFly-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PianoFly/Pods-PianoFly-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PianoFly/Pods-PianoFly-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5C6366DAB3536A52687EB740 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PianoFly-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6528D110262E033D002C13E4 /* Sources */ = {
@@ -188,6 +279,7 @@
 			files = (
 				6528D147262E3999002C13E4 /* PracticeLogView.swift in Sources */,
 				6514C8CF2633E1CB007737D9 /* BarChart.swift in Sources */,
+				657043E8267285E8004D6005 /* SignInWithEmail.swift in Sources */,
 				6528D132262E0596002C13E4 /* CustomTabs.swift in Sources */,
 				6528D118262E033D002C13E4 /* AppDelegate.swift in Sources */,
 				65BC65C92634EAB8002A3653 /* SignupView.swift in Sources */,
@@ -331,6 +423,7 @@
 		};
 		6528D129262E033E002C13E4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3DC776C3F7251F74EF9822CF /* Pods-PianoFly.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -352,6 +445,7 @@
 		};
 		6528D12A262E033E002C13E4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 23A8C15EE58F586BB8578528 /* Pods-PianoFly.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -395,9 +489,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		6513FC52263233E20094A6C2 /* XCRemoteSwiftPackageReference "ChartView" */ = {
+		65BA7C91263502DF008F18BA /* XCRemoteSwiftPackageReference "ChartView" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/AppPear/ChartView";
+			repositoryURL = "https://github.com/AppPear/ChartView.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.5.5;
@@ -406,9 +500,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		6513FC53263233E20094A6C2 /* SwiftUICharts */ = {
+		65BA7C92263502DF008F18BA /* SwiftUICharts */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6513FC52263233E20094A6C2 /* XCRemoteSwiftPackageReference "ChartView" */;
+			package = 65BA7C91263502DF008F18BA /* XCRemoteSwiftPackageReference "ChartView" */;
 			productName = SwiftUICharts;
 		};
 /* End XCSwiftPackageProductDependency section */
