@@ -186,6 +186,7 @@ struct Home : View {
             self.presentationMode.wrappedValue.dismiss()
         }, content: {
             OnboardingView(showOnboardingForSignupWithApple: $showOnboardingForSignupWithApple)
+                .preferredColorScheme(.light)
         })
         .alert(isPresented: $showError, content: {
             return Alert(title: Text("Error signing in with Apple 😰"))
