@@ -18,4 +18,5 @@ struct DatabaseUserField {
     static let firstName = "firstN"
     static let lastName = "lastN"
     static let email = "email"
+    static let providerdID = "provider_id"
 }

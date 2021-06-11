@@ -36,6 +36,32 @@ class SignInWithEmail {
         }
     }
     
+    // gets user data from db with userID then updates user defaults
+    func logInUser(userID: String, firstName: String, lastName: String, handler: @escaping(_ isError: Bool, _ isFinished: Bool) ->()) {
+        self.REF_USERS.document("\(String(describing: userID))").setData([
+            DatabaseUserField.firstName: firstName,
+            DatabaseUserField.lastName: lastName,
+            DatabaseUserField.email: "apple"
+
+            ]
+        ) { err in
+            if let err = err {
+                print("Error writing document: \(err.localizedDescription)")
+              } else {
+                print("SUCCESSFULLY CREATED NEW USER: \(String(describing: userID))")
+                  // sign in
+                  
+                  
+                    self.updateUserDefaultsForUser(isLoggingIn: true, firstName: firstName, lastName: lastName, userID: userID, userEmail: "apple") { isFinished in
+                        print("SUCCESS")
+                        handler(false, true)
+                    }
+                  
+            
+              }
+        }
+    }
+    
     func signInExistingUserWithEmail(email: String, password: String, handler: @escaping(_ isError: Bool, _ alertMessage: String?) -> ()) {
         
         // firebase sign in w email
@@ -69,6 +95,28 @@ class SignInWithEmail {
             }
             
         }
+    }
+    
+    func updateUserDefaultsForUser(isLoggingIn: Bool, firstName: String, lastName: String, userID: String, userEmail: String, handler: @escaping(_ isFinished: Bool) ->()) {
+        // Set user defaults to keep user logged in
+
+        
+        if isLoggingIn {
+            UserDefaults.standard.set(firstName, forKey: CurrentUserDefaults.firstName)
+            UserDefaults.standard.set(lastName, forKey: CurrentUserDefaults.lastName)
+            UserDefaults.standard.set(userEmail, forKey: CurrentUserDefaults.email)
+            UserDefaults.standard.set(userID, forKey: CurrentUserDefaults.userID)
+            handler(true)
+        } else {
+            
+            // loop through all userdefaults and delete keys
+            let defaultsDictionary = UserDefaults.standard.dictionaryRepresentation()
+            defaultsDictionary.keys.forEach { key in
+                UserDefaults.standard.removeObject(forKey: key)
+            }
+            handler(true)
+        }
+ 
     }
     
     func createNewUserUsingEmail(mail: String, password: String, firstName: String, lastName: String, handler: @escaping(_ isError: Bool, _ alertMessage: String?) ->()) {
@@ -134,27 +182,7 @@ class SignInWithEmail {
         }
     }
     
-    private func updateUserDefaultsForUser(isLoggingIn: Bool, firstName: String, lastName: String, userID: String, userEmail: String, handler: @escaping(_ isFinished: Bool) ->()) {
-        // Set user defaults to keep user logged in
-
-        
-        if isLoggingIn {
-            UserDefaults.standard.set(firstName, forKey: CurrentUserDefaults.firstName)
-            UserDefaults.standard.set(lastName, forKey: CurrentUserDefaults.lastName)
-            UserDefaults.standard.set(userEmail, forKey: CurrentUserDefaults.email)
-            UserDefaults.standard.set(userID, forKey: CurrentUserDefaults.userID)
-            handler(true)
-        } else {
-            
-            // loop through all userdefaults and delete keys
-            let defaultsDictionary = UserDefaults.standard.dictionaryRepresentation()
-            defaultsDictionary.keys.forEach { key in
-                UserDefaults.standard.removeObject(forKey: key)
-            }
-            handler(true)
-        }
- 
-    }
+  
     
     private func wipeUserDefaultsForUser() {
         // loop through all userdefaults and delete keys

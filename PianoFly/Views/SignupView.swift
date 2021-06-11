@@ -13,6 +13,7 @@ import FirebaseFirestore
 
 struct SignUpView: View {
   
+   
     
     var body: some View {
         
@@ -25,8 +26,8 @@ struct SignUpView: View {
                 Home()
 
             
-            
         }
+
         
     }
         
@@ -40,9 +41,16 @@ struct SignUpViewPreview: PreviewProvider {
 
 struct Home : View {
     
+    @State var displayName: String = ""
+    @State var email: String = ""
+    @State var providerID: String = ""
+    @State var provider: String = ""
+    @State var showError: Bool = false
     @State var index = 0
+    @State var showOnboardingForSignupWithApple: Bool = false
+    @Environment(\.presentationMode) var presentationMode
     
-    var body : some View{
+    var body : some View {
         
         VStack {
             
@@ -143,27 +151,106 @@ struct Home : View {
             }
             .padding(.top, 10)
             
-        
+            Button(action: {
+                
+                SignInWithApple.instance.startSignInWithAppleFlow(view: self)
+                
+            }, label: {
+                
+                
+                HStack {
+                    
+                    Image(systemName: "applelogo")
+                    
+                    Text("Sign up with Apple")
+         
+                }
+                
+                .foregroundColor(.white)
+                .padding()
+                .padding(.horizontal)
+             
+                .background(
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color.black)
+                        
+                )
+
+            })
             
         
-            HStack {
-                
-                Image(systemName: "applelogo")
-                
-                Text("Sign up with Apple")
-     
-            }
-            .foregroundColor(.white)
-            .padding()
-            .padding(.horizontal)
-          
-            .background(
-                RoundedRectangle(cornerRadius: 10)
-                    
-            )
             
         }
         .padding()
+        .fullScreenCover(isPresented: $showOnboardingForSignupWithApple, onDismiss: {
+            self.presentationMode.wrappedValue.dismiss()
+        }, content: {
+            OnboardingView(showOnboardingForSignupWithApple: $showOnboardingForSignupWithApple)
+        })
+        .alert(isPresented: $showError, content: {
+            return Alert(title: Text("Error signing in with Apple 😰"))
+        })
+        
+    }
+    
+    // MARK: FUNCTIONS
+    
+    func connectToFirebase(name: String, email: String, provider: String, credential: AuthCredential) {
+        
+        AuthService.instance.logInUserToFirebase(credential: credential) { returnedProviderID, isError, isNewUser, returnedUserID in
+            
+            if let newUser = isNewUser {
+                
+                if newUser {
+                    // new user
+                    print("NEW USER")
+                    
+                    if let providerID = returnedProviderID, !isError {
+                        // SUCCESS
+                
+                        // new user, continue to onboarding part 2
+                        self.displayName = name
+                        self.email = email
+                        self.providerID = providerID
+                        self.provider = provider
+                        self.showOnboardingForSignupWithApple.toggle()
+                        
+                    } else {
+                        // ERROR
+                        print("error getting provider id from log in user to firebase")
+                        self.showError.toggle()
+                    }
+                    
+                } else {
+                    // existing user
+                    print("EXISTINGH USER")
+                    if let userID = returnedUserID {
+                        
+                        AuthService.instance.logInUserToApp(userID: userID) { success in
+                            if success {
+                                print("Successful log in existing user")
+                            } else {
+                                print("error loggin existin guser into our app")
+                                self.showError.toggle()
+                            }
+                        }
+                        
+                    } else {
+                        // ERROR
+                        print("error getting provider id from existing user to firebase")
+                        self.showError.toggle()
+                    }
+                    
+                }
+                
+            } else {
+                // ERROR
+                print("error getting info when loggin in user to Firebase")
+                self.showError.toggle()
+            }
+            
+       
+        }
     }
 }
 
