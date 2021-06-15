@@ -29,8 +29,12 @@ struct PracticeLogView: View {
                     Spacer()
                     
                     Button(action: {
+                        
+                        
+                        
                         withAnimation(Animation.easeInOut(duration: 0.5)) {
                             isShowing = false
+                           
                         }
                         
                     }) {
@@ -50,9 +54,27 @@ struct PracticeLogView: View {
                 
                 Button(action: {
                     if Int(progress * 200) != 0 {
+                        
+                        print("finsihed")
+                        DateHelper.instance.getCurrentDate { currentDate in
+                            let practiceMinutes = Int(progress * 200)
+                            
+                            // send to database: id = currentDate, practiceMinutes = practiceMinutes, date = now
+                            UploadPracticeLog.instance.uploadPracticeLog(dateString: currentDate, practiceMinutes: practiceMinutes) { isError, practiceMinutes, dateString in
+                                if isError {
+                                    print("ERROR")
+                                } else {
+                                    print("SUCCESSFULLY UPLOADED TO FIRESTORE: id: \(dateString ?? ""), practiceminutes: \(practiceMinutes)")
+                                    
+                                }
+                            }
+                        }
+                        
                         withAnimation(Animation.easeInOut(duration: 0.5)) {
                             isShowing = false
                             practiceModel.appendChartData(data: Int(progress*500))
+                            
+                            
                         }
                         
                         
@@ -164,8 +186,7 @@ struct CircularSlider : View {
     func convertMinutesToHoursAndMinutes(minutes: String) -> String {
         let hours = Int(minutes)! / 60
         let min = (Int(minutes)! - (hours * 60))
-        print(hours)
-        print(min)
+       
         
         if hours == 0 {
             if min == 1 {

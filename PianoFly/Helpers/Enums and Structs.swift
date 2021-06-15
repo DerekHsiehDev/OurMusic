@@ -20,3 +20,14 @@ struct DatabaseUserField {
     static let email = "email"
     static let providerdID = "provider_id"
 }
+
+struct FirestoreDocumentCollectionNames {
+    static let practice = "Practice"
+    static let log = "Log"
+}
+
+struct DatabasePostField {
+    static let postID = "post_id"
+    static let practiceMinutes = "practice_minutes"
+    static let dateCreated = "date_created"
+}
