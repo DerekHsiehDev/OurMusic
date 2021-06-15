@@ -11,105 +11,118 @@ struct PracticeLogView: View {
     @Binding var isShowing: Bool
     @State var progress : CGFloat = 0
     @StateObject var practiceModel: PracticeModel
-    
+    @AppStorage(CurrentUserDefaults.userID) var userID: String?
     
     var body: some View {
         
+        
+        VStack {
             
-            VStack {
+            HStack(alignment: .center) {
                 
-                HStack(alignment: .center) {
-                    
-                    Text("Practice Log")
-                        .foregroundColor(.white)
-                        .fontWeight(.bold)
-                        .font(.largeTitle)
-                        
-                    
-                    Spacer()
-                    
-                    Button(action: {
-                        
-                        
-                        
-                        withAnimation(Animation.easeInOut(duration: 0.5)) {
-                            isShowing = false
-                           
-                        }
-                        
-                    }) {
-                        Image(systemName: "xmark")
-                            .foregroundColor(.white)
-                            .font(Font.title3.weight(.bold))
-                            
-                    }
-                }
-                .padding(.horizontal)
-                .padding(.top)
-                    
+                Text("Practice Log")
+                    .foregroundColor(.white)
+                    .fontWeight(.bold)
+                    .font(.largeTitle)
                 
-                Spacer()
-                CircularSlider(isShowing: $isShowing, progress: $progress)
+                
                 Spacer()
                 
                 Button(action: {
-                    if Int(progress * 200) != 0 {
-                        
-                        print("finsihed")
-                        DateHelper.instance.getCurrentDate { currentDate in
-                            let practiceMinutes = Int(progress * 200)
-                            
-                            // send to database: id = currentDate, practiceMinutes = practiceMinutes, date = now
-                            UploadPracticeLog.instance.uploadPracticeLog(dateString: currentDate, practiceMinutes: practiceMinutes) { isError, practiceMinutes, dateString in
-                                if isError {
-                                    print("ERROR")
-                                } else {
-                                    print("SUCCESSFULLY UPLOADED TO FIRESTORE: id: \(dateString ?? ""), practiceminutes: \(practiceMinutes)")
-                                    
-                                }
-                            }
-                        }
-                        
-                        withAnimation(Animation.easeInOut(duration: 0.5)) {
-                            isShowing = false
-                            practiceModel.appendChartData(data: Int(progress*500))
-                            
-                            
-                        }
-                        
-                        
+                    
+                    
+                    
+                    withAnimation(Animation.easeInOut(duration: 0.5)) {
+                        isShowing = false
                         
                     }
                     
                 }) {
-                    Text("Done")
-                        .foregroundColor(.black)
-                        .font(.title2)
-                        .fontWeight(.medium)
-                        
-                        .background(
-                            RoundedRectangle(cornerRadius: 35)
-                                .fill(Color.white)
-                                .frame(width: UIScreen.main.bounds.width - 100, height: 60)
-                            
-                        )
-                        .padding(.bottom)
-                }
+                    Image(systemName: "xmark")
+                        .foregroundColor(.white)
+                        .font(Font.title3.weight(.bold))
                     
+                }
             }
-            .padding(.vertical, 35)
-            .padding(.bottom, 35)
+            .padding(.horizontal)
+            .padding(.top)
             
-            .background(
-                Color.black.edgesIgnoringSafeArea(.vertical)
-
-            )
             
-          
+            Spacer()
+            CircularSlider(isShowing: $isShowing, progress: $progress)
+            Spacer()
+            
+            Button(action: {
+                if Int(progress * 200) != 0 {
+                    
+                    print("finsihed")
+                    DateHelper.instance.getCurrentDate { currentDate in
+                        let practiceMinutes = Int(progress * 200)
+                        
+                        // send to database: id = currentDate, practiceMinutes = practiceMinutes, date = now
+                        UploadPracticeLog.instance.uploadPracticeLog(dateString: currentDate, practiceMinutes: practiceMinutes) { isError, practiceMinutes, dateString in
+                            if isError {
+                                print("ERROR")
+                            } else {
+                                print("SUCCESSFULLY UPLOADED TO FIRESTORE: id: \(dateString ?? ""), practiceminutes: \(String(describing: practiceMinutes))")
+                                // get data from db
+                                
+                                if let userID = userID {
+                                    UploadPracticeLog.instance.getPracticeLog(userID: userID) { returnedPosts in
+                                        for post in returnedPosts {
+                                            print(post)
+                                        }
+                                                
+                                    }
+                                } else {
+                                    print("NO USER ID FOUND")
+                                    return
+                                }
+                            }
+                        }
+                    }
+                    
+                    withAnimation(Animation.easeInOut(duration: 0.5)) {
+                        isShowing = false
+                        practiceModel.appendChartData(data: Int(progress*500))
+                        
+                        
+                    }
+                    
+                    
+                    
+                    
+                }
+                
+            }) {
+                Text("Done")
+                    .foregroundColor(.black)
+                    .font(.title2)
+                    .fontWeight(.medium)
+                
+                    .background(
+                        RoundedRectangle(cornerRadius: 35)
+                            .fill(Color.white)
+                            .frame(width: UIScreen.main.bounds.width - 100, height: 60)
+                        
+                    )
+                    .padding(.bottom)
+            }
+            
+        }
+        .padding(.vertical, 35)
+        .padding(.bottom, 35)
         
-         
-                
-                
+        .background(
+            Color.black.edgesIgnoringSafeArea(.vertical)
+            
+        )
+        
+        
+        
+        
+        
+        
         
     }
 }
@@ -117,7 +130,7 @@ struct PracticeLogView: View {
 struct PracticeLogViewPreview: PreviewProvider {
     static var previews: some View {
         PracticeLogView(isShowing: .constant(true), practiceModel: PracticeModel())
-            
+        
     }
 }
 
@@ -163,14 +176,14 @@ struct CircularSlider : View {
                     .rotationEffect(.init(degrees: -90))
                 
                 
-//                Text(convertMinutesToHoursAndMinutes(minutes: "\(progress * 500)"))
-//                    .font(.largeTitle)
-//                    .fontWeight(.heavy)
+                //                Text(convertMinutesToHoursAndMinutes(minutes: "\(progress * 500)"))
+                //                    .font(.largeTitle)
+                //                    .fontWeight(.heavy)
                 
                 Text((convertMinutesToHoursAndMinutes(minutes: "\(Int(progress * 200))")))
-                                    .font(.largeTitle)
-                                    .fontWeight(.heavy)
-                                    .foregroundColor(.white)
+                    .font(.largeTitle)
+                    .fontWeight(.heavy)
+                    .foregroundColor(.white)
                 
                 
             }
@@ -186,7 +199,7 @@ struct CircularSlider : View {
     func convertMinutesToHoursAndMinutes(minutes: String) -> String {
         let hours = Int(minutes)! / 60
         let min = (Int(minutes)! - (hours * 60))
-       
+        
         
         if hours == 0 {
             if min == 1 {
@@ -229,29 +242,29 @@ struct CircularSlider : View {
             withAnimation(Animation.linear(duration: 0.15)) {
                 let progress = lastAngle / 360
                 self.progress = CGFloat(progress)
-            
+                
                 self.angle = Double(lastAngle)
                 self.lastAngle = Double(lastAngle)
             }
-        
+            
         } else {
             withAnimation(Animation.linear(duration: 0.15)){
                 
                 // progress...
                 
                 print(angle)
-                    
-                        let progress = angle / 360
-                        self.progress = progress
-                    
-                        self.angle = Double(angle)
-                        self.lastAngle = Double(angle)
-                }
                 
+                let progress = angle / 360
+                self.progress = progress
+                
+                self.angle = Double(angle)
+                self.lastAngle = Double(angle)
+            }
+            
         }
         
         
-     
-
-        }
+        
+        
     }
+}
