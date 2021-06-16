@@ -15,9 +15,7 @@ struct BarChart: View {
     var body: some View {
         ZStack
         {
-            RoundedRectangle(cornerRadius: 10)
-                .fill(Color(#colorLiteral(red: 0.3411764706, green: 0.2901960784, blue: 0.8862745098, alpha: 0.8513462496)))
-                .frame(width: 400, height: 275)
+           
             
             VStack {
                 HStack {
@@ -30,8 +28,7 @@ struct BarChart: View {
                     Spacer(minLength: 0)
                 }
                 
-                
-                Spacer()
+     
                 
                 HStack(spacing: 20) {
                     BarView(selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 0, val: 100)
@@ -43,7 +40,13 @@ struct BarChart: View {
                     BarView(selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 6, val: 100)
                 }
             }
-            .frame(width: 390, height: 265)
+            .background(
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(Color(#colorLiteral(red: 0.3411764706, green: 0.2901960784, blue: 0.8862745098, alpha: 0.8513462496)))
+                    .frame(width: UIScreen.main.bounds.width - 15, height: 250)
+            )
+        
+         
         
            
         }

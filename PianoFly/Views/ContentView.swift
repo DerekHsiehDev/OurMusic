@@ -26,7 +26,7 @@ struct ContentView: View {
                 VStack(spacing: 0) {
                     ZStack {
                         
-                        HomeView(practiceModel: practiceModel)
+                        HomeView2(practiceModel: practiceModel)
                             .edgesIgnoringSafeArea(.all)
                             .opacity(self.index == 0 ? 1 : 0)
                             .zIndex(self.index == 0 ? 1 : 0)
@@ -42,7 +42,6 @@ struct ContentView: View {
                     .padding(.bottom, -35)
                     
                     CustomTabs(index: self.$index, isShowingPracticeLogView: $isShowingPracticeLogView)
-                        .padding(.bottom)
                 }
                 
                 PracticeLogView(isShowing: $isShowingPracticeLogView, practiceModel: practiceModel)
