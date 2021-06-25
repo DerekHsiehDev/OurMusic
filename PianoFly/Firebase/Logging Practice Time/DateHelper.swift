@@ -9,7 +9,7 @@ import Foundation
 
 class DateHelper {
      static let instance = DateHelper()
-    
+ 
     
     // MARK: PUBLIC FUNCTIONS
     
@@ -27,4 +27,24 @@ class DateHelper {
         handler(date)
         return
     }
+    
+    func convertLongDateToShortDate(longDate: Date) -> String {
+        
+        let dayformatter = DateFormatter()
+        dayformatter.dateFormat = "D"
+        let shortDate = dayformatter.string(from: longDate)
+        
+        return shortDate
+    }
+    
+    // MARK: PRIVATE FUNCTION
+    
+    private func convertStringDateToDateObject(date: String) -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM-dd-yyyy"
+        
+        let date = dateFormatter.date(from: date)
+        return date ?? Date()
+    }
 }
+

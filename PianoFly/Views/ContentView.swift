@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     
+    @StateObject var firebaseViewModel = FirebaseViewModel()
     @State var index = 0
     @State var isShowingPracticeLogView = false
     @StateObject var practiceModel = PracticeModel()
@@ -26,7 +27,7 @@ struct ContentView: View {
                 VStack(spacing: 0) {
                     ZStack {
                         
-                        HomeView2(practiceModel: practiceModel)
+                        HomeView2(practiceModel: practiceModel, firebaseViewModel: firebaseViewModel)
                             .edgesIgnoringSafeArea(.all)
                             .opacity(self.index == 0 ? 1 : 0)
                             .zIndex(self.index == 0 ? 1 : 0)
@@ -44,7 +45,7 @@ struct ContentView: View {
                     CustomTabs(index: self.$index, isShowingPracticeLogView: $isShowingPracticeLogView)
                 }
                 
-                PracticeLogView(isShowing: $isShowingPracticeLogView, practiceModel: practiceModel)
+                PracticeLogView(isShowing: $isShowingPracticeLogView, practiceModel: practiceModel, firebaseViewModel: firebaseViewModel)
                     .offset(y: isShowingPracticeLogView ? 0 : UIScreen.main.bounds.height * 3)
                     .edgesIgnoringSafeArea(.horizontal)
                 
@@ -52,6 +53,12 @@ struct ContentView: View {
                     
             }
             .statusBar(hidden: true)
+            .onAppear {
+                print("appeared")
+                firebaseViewModel.getFullPracticeLog(userID: userID!) { isFinished in
+                    firebaseViewModel.populateSevenDaysLog(fullArray: firebaseViewModel.fullPracticeLog)
+                }
+            }
         }
         
        

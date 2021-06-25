@@ -14,6 +14,7 @@ struct HomeView2: View {
 
     
     @StateObject var practiceModel: PracticeModel
+    @StateObject var firebaseViewModel: FirebaseViewModel
     
     var body: some View {
         VStack {
@@ -117,7 +118,7 @@ struct HomeView2: View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView2(practiceModel: PracticeModel())
+        HomeView2(practiceModel: PracticeModel(), firebaseViewModel: FirebaseViewModel())
     }
 }
 

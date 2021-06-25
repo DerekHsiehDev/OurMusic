@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import FirebaseCore
 
 struct PracticeLogView: View {
     @Binding var isShowing: Bool
     @State var progress : CGFloat = 0
     @StateObject var practiceModel: PracticeModel
     @AppStorage(CurrentUserDefaults.userID) var userID: String?
+    @StateObject var firebaseViewModel: FirebaseViewModel
     
     var body: some View {
         
@@ -68,12 +70,12 @@ struct PracticeLogView: View {
                                 // get data from db
                                 
                                 if let userID = userID {
-                                    UploadPracticeLog.instance.getPracticeLog(userID: userID) { returnedPosts in
-                                        for post in returnedPosts {
-                                            print(post)
-                                        }
-                                                
+                                    firebaseViewModel.getFullPracticeLog(userID: userID) { isFinished in
+                                        firebaseViewModel.populateSevenDaysLog(fullArray: firebaseViewModel.fullPracticeLog)
                                     }
+                                    
+                                    
+                                    
                                 } else {
                                     print("NO USER ID FOUND")
                                     return
@@ -129,7 +131,7 @@ struct PracticeLogView: View {
 
 struct PracticeLogViewPreview: PreviewProvider {
     static var previews: some View {
-        PracticeLogView(isShowing: .constant(true), practiceModel: PracticeModel())
+        PracticeLogView(isShowing: .constant(true), practiceModel: PracticeModel(), firebaseViewModel: FirebaseViewModel())
         
     }
 }

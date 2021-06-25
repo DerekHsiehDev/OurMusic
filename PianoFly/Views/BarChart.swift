@@ -9,6 +9,8 @@ import SwiftUI
 
 struct BarChart: View {
     
+    @State var daysArray: [String] = ["", "", "","", "", "", ""]
+    
     @State var selectedTime: CGFloat = -1
     @State var selectedIndex: Int = -1
     
@@ -31,13 +33,13 @@ struct BarChart: View {
      
                 
                 HStack(spacing: 20) {
-                    BarView(selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 0, val: 100)
-                    BarView(selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 1, val: 60)
-                    BarView(selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 2, val: 39)
-                    BarView(selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 3, val: 90)
-                    BarView(selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 4, val: 125)
-                    BarView(selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 5, val: 150)
-                    BarView(selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 6, val: 100)
+                    BarView(daysArray: $daysArray, selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 0, val: 100)
+                    BarView(daysArray: $daysArray, selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 1, val: 60)
+                    BarView(daysArray: $daysArray, selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 2, val: 39)
+                    BarView(daysArray: $daysArray, selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 3, val: 90)
+                    BarView(daysArray: $daysArray, selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 4, val: 125)
+                    BarView(daysArray: $daysArray, selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 5, val: 150)
+                    BarView(daysArray: $daysArray, selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 6, val: 100)
                 }
             }
             .background(
@@ -50,6 +52,23 @@ struct BarChart: View {
         
            
         }
+        .onAppear {
+            var days = [String]()
+            let formatter = DateFormatter()
+            formatter.dateFormat = "EEEE"
+            let currentDate = Date()
+            
+            for val in stride(from: -7, through: 0, by: 1) {
+                let newDate = Calendar.current.date(byAdding: .day, value: val, to: currentDate)
+                let stringDate = formatter.string(from: newDate!)
+                print(stringDate)
+                days.append(stringDate)
+                
+                
+            }
+            
+            daysArray = days
+        }
     }
 }
 
@@ -60,11 +79,12 @@ struct BarChart_Previews: PreviewProvider {
 }
 
 
-    var days = ["S", "M", "T", "W", "T", "F", "S"]
+ 
 
 
 struct BarView: View {
 
+    @Binding var daysArray: [String]
     @Binding var selectedTime: CGFloat
     @Binding var selectedIndex: Int
     let date: Int
@@ -80,7 +100,7 @@ struct BarView: View {
                     .scaleEffect(selectedIndex == date ? 1.20 : 1)
             }
             
-            Text(days[date])
+            Text(daysArray[date].prefix(1))
                 .foregroundColor(.white)
                 .bold()
         }

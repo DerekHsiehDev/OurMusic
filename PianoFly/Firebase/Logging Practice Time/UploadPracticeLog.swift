@@ -96,7 +96,7 @@ class UploadPracticeLog {
         // path to practice log collection
         let practiceREF = REF.document(userID).collection(FirestoreDocumentCollectionNames.practice)
         
-        practiceREF.order(by: DatabasePostField.postID, descending: true).limit(to: 7).getDocuments { querySnapshot, error in
+        practiceREF.order(by: DatabasePostField.postID, descending: true).limit(to: 31).getDocuments { querySnapshot, error in
             if let snapshot = querySnapshot, snapshot.documents.count > 0 {
                 for document in snapshot.documents {
                     if let userID = document.get(DatabasePostField.postID) as? String, let practiceMinutes = document.get(DatabasePostField.practiceMinutes) as? String, let dateTimestamp = document.get(DatabasePostField.dateCreated) as? Timestamp {
@@ -119,6 +119,7 @@ class UploadPracticeLog {
     
     private func getSingleDocumentFromDatabase(userID: String, postID: String, handler: @escaping(_ post: PostModel?) ->()) {
         // path
+        
         let docREF = REF.document(userID).collection(FirestoreDocumentCollectionNames.practice).document(postID)
         
         docREF.getDocument { document, error in
