@@ -71,7 +71,7 @@ struct PracticeLogView: View {
                                 
                                 if let userID = userID {
                                     firebaseViewModel.getFullPracticeLog(userID: userID) { isFinished in
-                                        firebaseViewModel.populateSevenDaysLog(fullArray: firebaseViewModel.fullPracticeLog)
+                                        print("FINISHED FETCHING USER POSTS")
                                     }
                                     
                                     

@@ -56,7 +56,7 @@ struct ContentView: View {
             .onAppear {
                 print("appeared")
                 firebaseViewModel.getFullPracticeLog(userID: userID!) { isFinished in
-                    firebaseViewModel.populateSevenDaysLog(fullArray: firebaseViewModel.fullPracticeLog)
+                        print("FETCHED ALL USER POSTS")
                 }
             }
         }

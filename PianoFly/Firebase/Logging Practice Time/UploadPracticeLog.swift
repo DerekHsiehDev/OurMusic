@@ -96,7 +96,7 @@ class UploadPracticeLog {
         // path to practice log collection
         let practiceREF = REF.document(userID).collection(FirestoreDocumentCollectionNames.practice)
         
-        practiceREF.order(by: DatabasePostField.postID, descending: true).limit(to: 31).getDocuments { querySnapshot, error in
+        practiceREF.order(by: DatabasePostField.postID, descending: false).limit(to: 31).getDocuments { querySnapshot, error in
             if let snapshot = querySnapshot, snapshot.documents.count > 0 {
                 for document in snapshot.documents {
                     if let userID = document.get(DatabasePostField.postID) as? String, let practiceMinutes = document.get(DatabasePostField.practiceMinutes) as? String, let dateTimestamp = document.get(DatabasePostField.dateCreated) as? Timestamp {
@@ -105,6 +105,7 @@ class UploadPracticeLog {
                     }
                 }
                 handler(postArray)
+                print("GOT ALL DOCUEMNTS")
                 return
             } else {
                 print("NO DOCUMENTS FOUND IN SNAPSHOT FOUND FOR THIS USER")

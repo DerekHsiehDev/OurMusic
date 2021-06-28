@@ -72,7 +72,7 @@ struct HomeView2: View {
                     
                     
 //                    BarChartView(data: ChartData(points: practiceModel.chartData), title: "Recent Practice (minutes)", style: chartStyle, form: ChartForm.extraLarge, cornerImage: Image(systemName: "music.quarternote.3"), valueSpecifier: "%.0f")
-                    BarChart()
+                    BarChart(firebaseViewModel: firebaseViewModel)
                 }
     
                 

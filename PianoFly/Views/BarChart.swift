@@ -10,7 +10,7 @@ import SwiftUI
 struct BarChart: View {
     
     @State var daysArray: [String] = ["", "", "","", "", "", ""]
-    
+    @StateObject var firebaseViewModel: FirebaseViewModel
     @State var selectedTime: CGFloat = -1
     @State var selectedIndex: Int = -1
     
@@ -21,7 +21,7 @@ struct BarChart: View {
             
             VStack {
                 HStack {
-                    Text(selectedIndex != -1 ? "\(String(format: "%.0f minutes", selectedTime))" : "Practice Minutes This Week")
+                    Text(selectedIndex != -1 ? "\(convertBackToPracticeMinutes(original: selectedTime)) minutes" : "Practice Minutes This Week")
                         .foregroundColor(.white)
                         .font(.title2)
                         .bold()
@@ -31,16 +31,34 @@ struct BarChart: View {
                 }
                 
      
-                
-                HStack(spacing: 20) {
-                    BarView(daysArray: $daysArray, selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 0, val: 100)
-                    BarView(daysArray: $daysArray, selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 1, val: 60)
-                    BarView(daysArray: $daysArray, selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 2, val: 39)
-                    BarView(daysArray: $daysArray, selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 3, val: 90)
-                    BarView(daysArray: $daysArray, selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 4, val: 125)
-                    BarView(daysArray: $daysArray, selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 5, val: 150)
-                    BarView(daysArray: $daysArray, selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 6, val: 100)
+                if firebaseViewModel.doneFetching {
+                    HStack(spacing: 20) {
+                        BarView(daysArray: $daysArray, selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 0, val: convertPracticeMinuteIntoBarRatio(index: 0))
+                        BarView(daysArray: $daysArray, selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 1, val: convertPracticeMinuteIntoBarRatio(index: 1))
+                        BarView(daysArray: $daysArray, selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 2, val: convertPracticeMinuteIntoBarRatio(index: 2))
+                        BarView(daysArray: $daysArray, selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 3, val: convertPracticeMinuteIntoBarRatio(index: 3))
+                        BarView(daysArray: $daysArray, selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 4, val: convertPracticeMinuteIntoBarRatio(index: 4))
+                        BarView(daysArray: $daysArray, selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 5, val: convertPracticeMinuteIntoBarRatio(index: 5))
+                        BarView(daysArray: $daysArray, selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 6, val: convertPracticeMinuteIntoBarRatio(index: 6))
+                        
+                    }
+                } else {
+                    HStack(spacing: 20) {
+                        BarView(daysArray: $daysArray, selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 0, val: 0)
+                        BarView(daysArray: $daysArray, selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 1, val: 0)
+                        BarView(daysArray: $daysArray, selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 2, val: 0)
+                        BarView(daysArray: $daysArray, selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 3, val: 0)
+                        BarView(daysArray: $daysArray, selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 4, val: 0)
+                        BarView(daysArray: $daysArray, selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 5, val: 0)
+                        BarView(daysArray: $daysArray, selectedTime: $selectedTime, selectedIndex: $selectedIndex, date: 6, val: 0)
+             
+                    }
+                    
+                    
+
                 }
+                
+            
             }
             .background(
                 RoundedRectangle(cornerRadius: 10)
@@ -70,11 +88,43 @@ struct BarChart: View {
             daysArray = days
         }
     }
+    
+    // MARK: FUNCTIONS
+    
+    func convertPracticeMinuteIntoBarRatio(index: Int) -> CGFloat {
+        
+        
+        let numerator = CGFloat(Int(firebaseViewModel.lastSevenDaysLog[index].practiceMinutes)!)
+        let denominator = CGFloat(firebaseViewModel.highestInSevenDayLog)
+        
+        
+        // ratio = numerator/denomiator
+        let ratio = numerator/denominator
+        
+        
+        
+        
+        return CGFloat(ratio * 150)
+        
+        
+    }
+    
+    func convertBackToPracticeMinutes(original: CGFloat) -> Int {
+        
+        let ratio = original / 150
+        
+        // (original/150) * denominator
+        let denominator = CGFloat(firebaseViewModel.highestInSevenDayLog)
+        
+        print(Int(ratio * denominator))
+        
+        return Int(ratio * denominator)
+    }
 }
 
 struct BarChart_Previews: PreviewProvider {
     static var previews: some View {
-        BarChart()
+        BarChart(firebaseViewModel: FirebaseViewModel())
     }
 }
 
@@ -98,6 +148,7 @@ struct BarView: View {
                 Capsule().frame(width: 30, height: val)
                     .foregroundColor(Color.white)
                     .scaleEffect(selectedIndex == date ? 1.20 : 1)
+                    
             }
             
             Text(daysArray[date].prefix(1))
