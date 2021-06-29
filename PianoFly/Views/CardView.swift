@@ -62,10 +62,24 @@ struct CardView: View {
 
                         HStack {
                             Spacer()
+                            
+                            if isEditing {
+                                Button {
+                                    flipped.toggle()
+                                } label: {
+                                    Image(systemName: "xmark")
+                                        .font(.title2)
+                                        .foregroundColor(.red)
+                                }
 
-                            Image(systemName: "music.note.list")
-                                .foregroundColor(.gray)
-                                .font(.title2)
+                            } else {
+                                Image(systemName: "music.note.list")
+                                    .foregroundColor(.gray)
+                                    .font(.title2)
+                            }
+                            
+
+                           
                         }
 
 
@@ -92,7 +106,7 @@ struct CardView: View {
             
             
             RoundedRectangle(cornerRadius: 25)
-                .fill(Color.black)
+                .fill(isEditing ? Color.red : Color.black)
                 .frame(width: 175, height: 175)
                 .shadow(color: Color.black.opacity(0.3), radius: 10, x: 0, y: 0)
                 .overlay(
@@ -101,16 +115,29 @@ struct CardView: View {
                         Spacer(minLength: 0)
 
                         VStack(alignment: .leading) {
-
-                            Text(piece.title)
-//                                .font(.title3)
-                                .bold()
-                                .foregroundColor(.white)
-                                .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
-                                .lineLimit(nil)
-                                .fixedSize(horizontal: false, vertical: true)
+                            
+                            
+                            if isEditing {
                                 
+                                Button {
+                                    print("remove")
+                                } label: {
+                                    Image(systemName: "xmark")
+                                        .font(Font.largeTitle.weight(.bold))
+                                        .foregroundColor(.white)
+                                }
 
+                                
+                            } else {
+                                Text(piece.title)
+    //                                .font(.title3)
+                                    .bold()
+                                    .foregroundColor(.white)
+                                    .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
+                                    .lineLimit(nil)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    
+                            }
 
                             
                         }

@@ -84,6 +84,19 @@ struct HomeView2: View {
                     
                     Spacer()
                     
+                    if isEditing {
+                        Button {
+                            
+                        } label: {
+                            // Add new piece
+                            Image(systemName: "plus.square.fill")
+                                .font(.largeTitle)
+                        }
+                    }
+                    
+                   
+
+                    
                     Button(action: {isEditing.toggle()}, label: {
                         
                         Text(isEditing ? "done" : "edit")
@@ -103,15 +116,24 @@ struct HomeView2: View {
 
                 ScrollView(.horizontal, showsIndicators: false) {
                     
-                    HStack(spacing: 30) {
-                        ForEach(practiceModel.pieces, id: \.self) { piece in
-                            CardView(isEditing: $isEditing, piece: piece)
-                                
-                        }
-                    }
-                    .padding()
-                    .padding()
                     
+                        
+                        HStack(spacing: 30) {
+                            
+                           
+                            
+                           
+                            
+                            ForEach(practiceModel.pieces, id: \.self) { piece in
+                                CardView(isEditing: $isEditing, piece: piece)
+                                    
+                            }
+                        }
+                        .padding()
+                        .padding()
+                        
+                    
+                   
                 }
                 .onTapGesture {
                     print("tapped")
