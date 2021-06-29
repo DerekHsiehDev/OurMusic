@@ -15,6 +15,7 @@ struct HomeView2: View {
     
     @StateObject var practiceModel: PracticeModel
     @StateObject var firebaseViewModel: FirebaseViewModel
+    @State var isEditing: Bool = false
     
     var body: some View {
         VStack {
@@ -82,15 +83,29 @@ struct HomeView2: View {
                         .bold()
                     
                     Spacer()
+                    
+                    Button(action: {isEditing.toggle()}, label: {
+                        
+                        Text(isEditing ? "done" : "edit")
+                            .foregroundColor(isEditing ? .white : .blue)
+                            .padding(.horizontal)
+                            .padding(.vertical, 5)
+                            .background(
+                                RoundedRectangle(cornerRadius: 9)
+                                    .fill(isEditing ? Color.blue : Color.clear)
+                                    
+                            )
+                    })
                 }
                 .padding(.horizontal)
                 .padding()
+                .padding(.top)
 
                 ScrollView(.horizontal, showsIndicators: false) {
                     
                     HStack(spacing: 30) {
                         ForEach(practiceModel.pieces, id: \.self) { piece in
-                            CardView(piece: piece)
+                            CardView(isEditing: $isEditing, piece: piece)
                                 
                         }
                     }
