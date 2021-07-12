@@ -13,15 +13,17 @@ class FirebaseViewModel: ObservableObject {
     
     @Published var fullPracticeLog: [PostModel] = []
     @Published var lastSevenDaysLog: [PostModel] = []
+    @Published var pieceArray: [UserPiece] = []
     @Published var highestInSevenDayLog: Int = 0
     @Published var doneFetching = false
+    @AppStorage(CurrentUserDefaults.userID) var userID: String?
 
     
     // MARK: PUBLIC FUNCTIONS
     
     func getFullPracticeLog(userID: String, handler: @escaping(_ isFinished: Bool) ->()){
         
-        UploadPracticeLog.instance.getPracticeLog(userID: userID) { returnedPosts in
+        UploadToFirebaseHelper.instance.getPracticeLog(userID: userID) { returnedPosts in
             for post in returnedPosts {
                 self.fullPracticeLog.append(post)
             }
@@ -36,6 +38,12 @@ class FirebaseViewModel: ObservableObject {
 
             
             return
+        }
+    }
+    
+    func getAllPieces() {
+        UploadToFirebaseHelper.instance.getPieces { pieceArray in
+            self.pieceArray = pieceArray
         }
     }
     

@@ -173,19 +173,19 @@ struct CardView: View {
     }
 }
 
-struct CardView_Previews: PreviewProvider {
-    @State var isEditing: Bool = false
-
-    static var previews: some View {
-        
-        ZStack {
-            Color.black.opacity(0.09).edgesIgnoringSafeArea(.vertical)
-            CardView(isEditing: .constant(false), piece: Piece(uuid: UUID(), composer: "Chopin", title: "Piano Concerto No. 2"))
-               
-        }
-            
-    }
-}
+//struct CardView_Previews: PreviewProvider {
+//    @State var isEditing: Bool = false
+//
+//    static var previews: some View {
+//        
+//        ZStack {
+//            Color.black.opacity(0.09).edgesIgnoringSafeArea(.vertical)
+//            CardView(isEditing: .constant(false), piece: Piece(uuid: UUID(), composer: "Chopin", title: "Piano Concerto No. 2"))
+//               
+//        }
+//            
+//    }
+//}
 
 
 

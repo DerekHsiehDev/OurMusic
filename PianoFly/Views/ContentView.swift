@@ -6,14 +6,20 @@
 //
 
 import SwiftUI
+import BottomSheet
 
 struct ContentView: View {
     
+    @State var isShowingFormView: Bool = false
     @StateObject var firebaseViewModel = FirebaseViewModel()
     @State var index = 0
     @State var isShowingPracticeLogView = false
-    @StateObject var practiceModel = PracticeModel()
+    
+//    @StateObject var practiceModel = PracticeModel()
     @AppStorage(CurrentUserDefaults.userID) var userID: String?
+    
+    @State var isShowingPieceView: Bool = false
+    @State var selectedPiece: Piece? = nil
     
     var body: some View {
      
@@ -27,8 +33,8 @@ struct ContentView: View {
                 VStack(spacing: 0) {
                     ZStack {
                         
-                        HomeView2(practiceModel: practiceModel, firebaseViewModel: firebaseViewModel)
-                            .edgesIgnoringSafeArea(.all)
+                        HomeView(selectedPiece: $selectedPiece, isShowingPieceView: $isShowingPieceView, isShowingFormView: $isShowingFormView, isShowingPracticeLogView: $isShowingPracticeLogView)
+                        
                             .opacity(self.index == 0 ? 1 : 0)
                             .zIndex(self.index == 0 ? 1 : 0)
                         
@@ -40,14 +46,13 @@ struct ContentView: View {
                             .opacity(self.index == 3 ? 1 : 0)
                             
                     }
-                    .padding(.bottom, -35)
                     
-                    CustomTabs(index: self.$index, isShowingPracticeLogView: $isShowingPracticeLogView)
+                    TabView(index: $index)
                 }
                 
-                PracticeLogView(isShowing: $isShowingPracticeLogView, practiceModel: practiceModel, firebaseViewModel: firebaseViewModel)
-                    .offset(y: isShowingPracticeLogView ? 0 : UIScreen.main.bounds.height * 3)
-                    .edgesIgnoringSafeArea(.horizontal)
+//                PracticeLogView(isShowing: $isShowingPracticeLogView, practiceModel: practiceModel, firebaseViewModel: firebaseViewModel)
+//                    .offset(y: isShowingPracticeLogView ? 0 : UIScreen.main.bounds.height * 3)
+//                    .edgesIgnoringSafeArea(.horizontal)
                 
                 
                     
@@ -55,10 +60,22 @@ struct ContentView: View {
             .statusBar(hidden: true)
             .onAppear {
                 print("appeared")
-                firebaseViewModel.getFullPracticeLog(userID: userID!) { isFinished in
-                        print("FETCHED ALL USER POSTS")
-                }
+//                firebaseViewModel.getFullPracticeLog(userID: userID!) { isFinished in
+//                        print("FETCHED ALL USER POSTS")
+//                }
+                firebaseViewModel.getAllPieces()
+                
             }
+            .bottomSheet(isPresented: $isShowingPieceView, height: (UIScreen.main.bounds.width) + 100) {
+                PieceView(piece: self.selectedPiece ?? Piece(composer: "", title: "", practiceArray: [PracticeDays(date: "7-10-2021", practiceMinutes: 123)], thisWeekPracticeMinutes: 0, allTimePracticeMinutes: 0, iconColor: Color.clear))
+            }
+            .sheet(isPresented: $isShowingFormView) {
+                FormView()
+            }
+            .sheet(isPresented: $isShowingPracticeLogView) {
+                PracticeLogView(isShowing: $isShowingPracticeLogView, firebaseViewModel: firebaseViewModel)
+            }
+            
         }
         
        

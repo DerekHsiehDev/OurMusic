@@ -9,7 +9,15 @@ import SwiftUI
 
 struct NewPieceView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(alignment: .leading) {
+            HStack {
+                Text("New Piece").font(.title).bold()
+                Spacer()
+                Image(systemName: "xmark.circle.fill").foregroundColor(.gray).font(.system(size: 26))
+            }
+            .padding(.horizontal)
+            Spacer()
+        }
     }
 }
 

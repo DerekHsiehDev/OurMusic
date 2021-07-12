@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct CurrentUserDefaults {
     static let userID = "user_id"
@@ -24,6 +25,8 @@ struct DatabaseUserField {
 struct FirestoreDocumentCollectionNames {
     static let practice = "Practice"
     static let log = "Log"
+    static let pieces = "Pieces"
+    static let myPieces = "my_pieces"
 }
 
 struct DatabasePostField {
@@ -31,3 +34,12 @@ struct DatabasePostField {
     static let practiceMinutes = "practice_minutes"
     static let dateCreated = "date_created"
 }
+
+
+struct DatabaseNewPieceField {
+    static let pieceTitle = "piece_title"
+    static let composer = "composer"
+    static let iconColor = "icon_color"
+}
+
+

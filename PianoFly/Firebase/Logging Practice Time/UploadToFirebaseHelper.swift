@@ -8,13 +8,65 @@
 import FirebaseFirestore
 import SwiftUI
 
-class UploadPracticeLog {
+class UploadToFirebaseHelper {
     
     @AppStorage(CurrentUserDefaults.userID) var userID: String?
-    static let instance = UploadPracticeLog()
+    static let instance = UploadToFirebaseHelper()
     let REF = db.collection(FirestoreDocumentCollectionNames.log)
     
     // MARK: PUBLIC FUNCTIONS
+    
+    func getPieces(handler: @escaping(_ pieceArray: [UserPiece]) -> ()) {
+        var pieceArray = [UserPiece]()
+        
+        if let userID = userID {
+            let pieceREF = db.collection(FirestoreDocumentCollectionNames.pieces).document(userID).collection(FirestoreDocumentCollectionNames.myPieces)
+            
+            pieceREF.getDocuments { querySnapshot, err in
+                if let snapshot = querySnapshot, snapshot.documents.count > 0 {
+                    for document in snapshot.documents {
+                        if let pieceTitle = document.documentID as? String,
+                           let composer = document.get(DatabaseNewPieceField.composer) as? String,
+                            let iconColor = document.get(DatabaseNewPieceField.iconColor) as? String
+                        {
+                            let newPiece = UserPiece(pieceTitle: pieceTitle, composer: composer, iconColor: iconColor)
+                            pieceArray.append(newPiece)
+                        }
+                    }
+                    print(pieceArray)
+                    handler(pieceArray)
+                }
+            }
+        
+            
+            
+        }
+    }
+    
+    func uploadNewPiece(pieceTitle: String, composer: String, iconColor: String, handler: @escaping(_ isError: Bool) -> ()) {
+        if let userID = userID {
+            let pieceREF = db.collection(FirestoreDocumentCollectionNames.pieces).document(userID).collection(FirestoreDocumentCollectionNames.myPieces).document(pieceTitle)
+            
+            
+            let newPiece: [String: Any] = [
+                DatabaseNewPieceField.composer: composer,
+                DatabaseNewPieceField.iconColor: iconColor
+            ]
+            pieceREF.setData(newPiece) { error in
+                if let error = error {
+                    print(error.localizedDescription)
+                    handler(true)
+                    return
+                } else {
+                    handler(false)
+                    return
+                }
+            }
+            
+            
+            
+        }
+    }
     
     func uploadPracticeLog(dateString: String, practiceMinutes: Int, handler: @escaping(_ isError: Bool, _ practiceMinutes: Int?,_ dateString: String?) ->()) {
         if let userID = userID {
