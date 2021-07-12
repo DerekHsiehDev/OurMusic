@@ -79,17 +79,17 @@ struct PracticeLogView: View {
                 if Int(progress * 200) != 0 {
                     
                     print("finsihed")
-//                    DateHelper.instance.getCurrentDate { currentDate in
-//                        let practiceMinutes = Int(progress * 200)
-//
-//                        // send to database: id = currentDate, practiceMinutes = practiceMinutes, date = now
-//                        UploadToFirebaseHelper.instance.uploadPracticeLog(dateString: currentDate, practiceMinutes: practiceMinutes) { isError, practiceMinutes, dateString in
-//                            if isError {
-//                                print("ERROR")
-//                            } else {
-//                                print("SUCCESSFULLY UPLOADED TO FIRESTORE: id: \(dateString ?? ""), practiceminutes: \(String(describing: practiceMinutes))")
-//                                // get data from db
-//
+                    DateHelper.instance.getCurrentDate { currentDate in
+                        let practiceMinutes = Int(progress * 200)
+
+                        // send to database: id = currentDate, practiceMinutes = practiceMinutes, date = now
+                        UploadToFirebaseHelper.instance.uploadPracticeLog(dateString: currentDate, practiceMinutes: practiceMinutes, piece: selectedPiece.pieceTitle == "" ? nil : selectedPiece) { isError  in
+                            if isError {
+                                print("ERROR")
+                            } else {
+                                print("SUCCESSFULLY UPLOADED POST TO FIREDB")
+                                // get data from db
+
 //                                if let userID = userID {
 //                                    firebaseViewModel.getFullPracticeLog(userID: userID) { isFinished in
 //                                        print("FINISHED FETCHING USER POSTS")
@@ -101,9 +101,11 @@ struct PracticeLogView: View {
 //                                    print("NO USER ID FOUND")
 //                                    return
 //                                }
-//                            }
-//                        }
-//                    }
+                            }
+                        }
+                    }
+                    
+                    
                     
                     withAnimation(Animation.easeInOut(duration: 0.5)) {
                         isShowing = false

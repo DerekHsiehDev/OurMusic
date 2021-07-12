@@ -11,8 +11,9 @@ import SwiftUI
 struct PostModel: Identifiable, Hashable {
     var id = UUID()
     var postID: String
-    var practiceMinutes: String
+    var practiceMinutes: Int
     var dateCreated: Date
+    var pieces: [String: Int]?
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
