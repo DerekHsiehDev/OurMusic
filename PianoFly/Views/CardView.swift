@@ -43,6 +43,7 @@ struct FlipEffect: GeometryEffect {
 struct CardView: View {
     @State var flipped: Bool = false
     @State var flip: Bool = false
+    @Binding var isEditing: Bool
     
     var piece: Piece
     
@@ -61,10 +62,24 @@ struct CardView: View {
 
                         HStack {
                             Spacer()
+                            
+                            if isEditing {
+                                Button {
+                                    flipped.toggle()
+                                } label: {
+                                    Image(systemName: "xmark")
+                                        .font(.title2)
+                                        .foregroundColor(.red)
+                                }
 
-                            Image(systemName: "music.note.list")
-                                .foregroundColor(.gray)
-                                .font(.title2)
+                            } else {
+                                Image(systemName: "music.note.list")
+                                    .foregroundColor(.gray)
+                                    .font(.title2)
+                            }
+                            
+
+                           
                         }
 
 
@@ -91,7 +106,7 @@ struct CardView: View {
             
             
             RoundedRectangle(cornerRadius: 25)
-                .fill(Color.black)
+                .fill(isEditing ? Color.red : Color.black)
                 .frame(width: 175, height: 175)
                 .shadow(color: Color.black.opacity(0.3), radius: 10, x: 0, y: 0)
                 .overlay(
@@ -100,16 +115,29 @@ struct CardView: View {
                         Spacer(minLength: 0)
 
                         VStack(alignment: .leading) {
-
-                            Text(piece.title)
-//                                .font(.title3)
-                                .bold()
-                                .foregroundColor(.white)
-                                .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
-                                .lineLimit(nil)
-                                .fixedSize(horizontal: false, vertical: true)
+                            
+                            
+                            if isEditing {
                                 
+                                Button {
+                                    print("remove")
+                                } label: {
+                                    Image(systemName: "xmark")
+                                        .font(Font.largeTitle.weight(.bold))
+                                        .foregroundColor(.white)
+                                }
 
+                                
+                            } else {
+                                Text(piece.title)
+    //                                .font(.title3)
+                                    .bold()
+                                    .foregroundColor(.white)
+                                    .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
+                                    .lineLimit(nil)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    
+                            }
 
                             
                         }
@@ -132,21 +160,32 @@ struct CardView: View {
                 self.flipped.toggle()
             //}
     }
-        
+        .rotationEffect(.degrees(isEditing ? 2.75 : 0))
+        .rotation3DEffect(.degrees(5), axis: (x: 0, y: 0, z: 0))
+        .animation(
+            isEditing ?
+            Animation.easeInOut(duration: 0.15).repeatForever(autoreverses: true)
+            :
+                Animation.easeInOut(duration: 0.15)
+        )
         
  
     }
 }
 
-struct CardView_Previews: PreviewProvider {
-    static var previews: some View {
-        ZStack {
-            Color.black.opacity(0.09).edgesIgnoringSafeArea(.vertical)
-            CardView(piece: Piece(uuid: UUID(), composer: "Chopin", title: "Piano Concerto No. 2"))
-        }
-            
-    }
-}
+//struct CardView_Previews: PreviewProvider {
+//    @State var isEditing: Bool = false
+//
+//    static var previews: some View {
+//        
+//        ZStack {
+//            Color.black.opacity(0.09).edgesIgnoringSafeArea(.vertical)
+//            CardView(isEditing: .constant(false), piece: Piece(uuid: UUID(), composer: "Chopin", title: "Piano Concerto No. 2"))
+//               
+//        }
+//            
+//    }
+//}
 
 
 

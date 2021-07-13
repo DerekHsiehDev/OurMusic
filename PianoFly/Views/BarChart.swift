@@ -94,7 +94,7 @@ struct BarChart: View {
     func convertPracticeMinuteIntoBarRatio(index: Int) -> CGFloat {
         
         
-        let numerator = CGFloat(Int(firebaseViewModel.lastSevenDaysLog[index].practiceMinutes)!)
+        let numerator = CGFloat(Int(exactly: firebaseViewModel.lastSevenDaysLog[index].practiceMinutes)!)
         let denominator = CGFloat(firebaseViewModel.highestInSevenDayLog)
         
         

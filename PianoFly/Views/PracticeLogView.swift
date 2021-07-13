@@ -7,13 +7,16 @@
 
 import SwiftUI
 import FirebaseCore
+import BottomSheet
 
 struct PracticeLogView: View {
     @Binding var isShowing: Bool
     @State var progress : CGFloat = 0
-    @StateObject var practiceModel: PracticeModel
     @AppStorage(CurrentUserDefaults.userID) var userID: String?
+    @State private var showPieceBottomSheet: Bool = false
     @StateObject var firebaseViewModel: FirebaseViewModel
+    @State private var selectedPiece: UserPiece = UserPiece(pieceTitle: "", composer: "", iconColor: "")
+
     
     var body: some View {
         
@@ -23,7 +26,6 @@ struct PracticeLogView: View {
             HStack(alignment: .center) {
                 
                 Text("Practice Log")
-                    .foregroundColor(.white)
                     .fontWeight(.bold)
                     .font(.largeTitle)
                 
@@ -41,7 +43,6 @@ struct PracticeLogView: View {
                     
                 }) {
                     Image(systemName: "xmark")
-                        .foregroundColor(.white)
                         .font(Font.title3.weight(.bold))
                     
                 }
@@ -54,39 +55,62 @@ struct PracticeLogView: View {
             CircularSlider(isShowing: $isShowing, progress: $progress)
             Spacer()
             
+            
+            Button {
+                showPieceBottomSheet.toggle()
+            } label: {
+                Text(selectedPiece.pieceTitle == "" ? "Selected A Piece" : selectedPiece.pieceTitle)
+
+                    .foregroundColor(Color(#colorLiteral(red: 0.3411764706, green: 0.2901960784, blue: 0.8862745098, alpha: 1)))
+                    .font(.title2)
+                    .fontWeight(.medium)
+                
+                    .background(
+                        RoundedRectangle(cornerRadius: 35)
+                            .stroke(Color(#colorLiteral(red: 0.3411764706, green: 0.2901960784, blue: 0.8862745098, alpha: 1)), lineWidth: 4)
+                            .frame(width: UIScreen.main.bounds.width - 100, height: 60)
+                        
+                    )
+                    .padding(.bottom)
+                    .padding()
+            }
+
+            
             Button(action: {
                 if Int(progress * 200) != 0 {
                     
                     print("finsihed")
                     DateHelper.instance.getCurrentDate { currentDate in
                         let practiceMinutes = Int(progress * 200)
-                        
+
                         // send to database: id = currentDate, practiceMinutes = practiceMinutes, date = now
-                        UploadPracticeLog.instance.uploadPracticeLog(dateString: currentDate, practiceMinutes: practiceMinutes) { isError, practiceMinutes, dateString in
+                        UploadToFirebaseHelper.instance.uploadPracticeLog(dateString: currentDate, practiceMinutes: practiceMinutes, piece: selectedPiece.pieceTitle == "" ? nil : selectedPiece) { isError  in
                             if isError {
                                 print("ERROR")
                             } else {
-                                print("SUCCESSFULLY UPLOADED TO FIRESTORE: id: \(dateString ?? ""), practiceminutes: \(String(describing: practiceMinutes))")
+                                print("SUCCESSFULLY UPLOADED POST TO FIREDB")
                                 // get data from db
-                                
-                                if let userID = userID {
-                                    firebaseViewModel.getFullPracticeLog(userID: userID) { isFinished in
-                                        print("FINISHED FETCHING USER POSTS")
-                                    }
-                                    
-                                    
-                                    
-                                } else {
-                                    print("NO USER ID FOUND")
-                                    return
-                                }
+
+//                                if let userID = userID {
+//                                    firebaseViewModel.getFullPracticeLog(userID: userID) { isFinished in
+//                                        print("FINISHED FETCHING USER POSTS")
+//                                    }
+//
+//
+//
+//                                } else {
+//                                    print("NO USER ID FOUND")
+//                                    return
+//                                }
                             }
                         }
                     }
                     
+                    
+                    
                     withAnimation(Animation.easeInOut(duration: 0.5)) {
                         isShowing = false
-                        practiceModel.appendChartData(data: Int(progress*500))
+//                        practiceModel.appendChartData(data: Int(progress*500))
                         
                         
                     }
@@ -97,14 +121,19 @@ struct PracticeLogView: View {
                 }
                 
             }) {
+                
+
+                
+                
                 Text("Done")
-                    .foregroundColor(.black)
+
+                    .foregroundColor(.white)
                     .font(.title2)
                     .fontWeight(.medium)
                 
                     .background(
                         RoundedRectangle(cornerRadius: 35)
-                            .fill(Color.white)
+                            .fill(Color(#colorLiteral(red: 0.3411764706, green: 0.2901960784, blue: 0.8862745098, alpha: 1)))
                             .frame(width: UIScreen.main.bounds.width - 100, height: 60)
                         
                     )
@@ -114,27 +143,41 @@ struct PracticeLogView: View {
         }
         .padding(.vertical, 35)
         .padding(.bottom, 35)
+        .bottomSheet(isPresented: $showPieceBottomSheet, height: calculateBottomSheetHeight()) {
+            PieceSelectionView(selectedPiece: $selectedPiece, showPieceBottomSheet: $showPieceBottomSheet, pieceArray: firebaseViewModel.pieceArray)
+        }
         
-        .background(
-            Color.black.edgesIgnoringSafeArea(.vertical)
+        
+        
+        
+        
+        
+        
+        
+    }
+    
+    func calculateBottomSheetHeight() -> CGFloat {
+        print(firebaseViewModel.pieceArray.count)
+        print(UIScreen.main.bounds.height)
+        
+        if CGFloat(firebaseViewModel.pieceArray.count * 145) > UIScreen.main.bounds.height {
             
-        )
+            return UIScreen.main.bounds.height
+            
+        } else {
+            return CGFloat(firebaseViewModel.pieceArray.count * 145)
+        }
         
-        
-        
-        
-        
-        
-        
+      
     }
 }
-
-struct PracticeLogViewPreview: PreviewProvider {
-    static var previews: some View {
-        PracticeLogView(isShowing: .constant(true), practiceModel: PracticeModel(), firebaseViewModel: FirebaseViewModel())
-        
-    }
-}
+//
+//struct PracticeLogViewPreview: PreviewProvider {
+//    static var previews: some View {
+////        PracticeLogView(isShowing: .constant(true), practiceModel: PracticeModel(), firebaseViewModel: FirebaseViewModel())
+//        
+//    }
+//}
 
 
 struct CircularSlider : View {
@@ -151,7 +194,7 @@ struct CircularSlider : View {
             ZStack{
                 
                 Circle()
-                    .stroke(Color.gray,style: StrokeStyle(lineWidth: 55, lineCap: .round, lineJoin: .round))
+                    .stroke(Color.gray.opacity(0.6),style: StrokeStyle(lineWidth: 55, lineCap: .round, lineJoin: .round))
                     .frame(width: size, height: size)
                 
                 // progress....
@@ -183,9 +226,8 @@ struct CircularSlider : View {
                 //                    .fontWeight(.heavy)
                 
                 Text((convertMinutesToHoursAndMinutes(minutes: "\(Int(progress * 200))")))
-                    .font(.largeTitle)
-                    .fontWeight(.heavy)
-                    .foregroundColor(.white)
+                    .font(.system(.largeTitle, design: .rounded))
+                    .fontWeight(.bold)
                 
                 
             }
