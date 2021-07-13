@@ -70,7 +70,7 @@ struct ContentView: View {
                 PieceView(piece: self.selectedPiece ?? Piece(composer: "", title: "", practiceArray: [PracticeDays(date: "7-10-2021", practiceMinutes: 123)], thisWeekPracticeMinutes: 0, allTimePracticeMinutes: 0, iconColor: Color.clear))
             }
             .sheet(isPresented: $isShowingFormView) {
-                FormView()
+                FormView(firebaseViewModel: firebaseViewModel)
             }
             .sheet(isPresented: $isShowingPracticeLogView) {
                 PracticeLogView(isShowing: $isShowingPracticeLogView, firebaseViewModel: firebaseViewModel)

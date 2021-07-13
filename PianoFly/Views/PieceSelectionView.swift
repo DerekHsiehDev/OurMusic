@@ -10,57 +10,111 @@ import SwiftUI
 struct PieceSelectionView: View {
     @Binding var selectedPiece: UserPiece
     @Binding var showPieceBottomSheet: Bool
+    
     var pieceArray: [UserPiece]
     
     var body: some View {
         VStack {
             
             Text("Select one of your pieces to add practice minutes to")
-                .font(.system(.title2))
+                .font(.title2)
+                   .multilineTextAlignment(.center)
+                   .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding()
+                .padding(.top)
                 
                 
-            
-            ForEach(pieceArray, id: \.self) { piece in
-                HStack {
-                    Text(returnIconName(pieceTitle: piece.pieceTitle))
-                        .foregroundColor(.white)
-                        .font(.title2)
-                        .bold()
-                        .background(
-                        
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(Color(piece.iconColor))
-                                .shadow(color: Color.black.opacity(0.6), radius: 4, x: 0, y: 0)
-                                .frame(width: 70, height: 70)
-                        
-                        )
-                        .padding()
-                    
-                    
-                    
-                    VStack(alignment: .leading) {
-                        Text(piece.pieceTitle)
-                            .bold()
-                            .font(.system(.title, design: .rounded))
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.4)
-                        
-                        Text(piece.composer)
-                    }
-                    .padding()
-                    
-                    Spacer(minLength: 0)
-                    
-                        
-                    
-                }.padding()
-                    .padding(.horizontal)
-                    .onTapGesture {
-                        self.selectedPiece = piece
-                        self.showPieceBottomSheet.toggle()
-                    }
+                
+            if CGFloat(pieceArray.count * 145) > UIScreen.main.bounds.height {
+                ScrollView(.vertical, showsIndicators: false) {
+                    ForEach(pieceArray, id: \.self) { piece in
+                        HStack {
+                            Text(returnIconName(pieceTitle: piece.pieceTitle))
+                                .foregroundColor(.white)
+                                .font(.title2)
+                                .bold()
+                                .background(
+                                
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .fill(Color(piece.iconColor))
+                                        .shadow(color: Color.black.opacity(0.6), radius: 4, x: 0, y: 0)
+                                        .frame(width: 70, height: 70)
+                                
+                                )
+                                .padding()
+                            
+                            
+                            
+                            VStack(alignment: .leading) {
+                                Text(piece.pieceTitle)
+                                    .bold()
+                                    .font(.system(.title, design: .rounded))
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.4)
+                                
+                                Text(piece.composer)
+                            }
+                            .padding()
+                            
+                            Spacer(minLength: 0)
+                            
+                                
+                            
+                        }.padding()
+                            .padding(.horizontal)
+                            .onTapGesture {
+                                self.selectedPiece = piece
+                                self.showPieceBottomSheet.toggle()
+                            }
 
+                    }
+                }
+                .padding()
+            } else {
+                ForEach(pieceArray, id: \.self) { piece in
+                    HStack {
+                        Text(returnIconName(pieceTitle: piece.pieceTitle))
+                            .foregroundColor(.white)
+                            .font(.title2)
+                            .bold()
+                            .background(
+                            
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(Color(piece.iconColor))
+                                    .shadow(color: Color.black.opacity(0.6), radius: 4, x: 0, y: 0)
+                                    .frame(width: 70, height: 70)
+                            
+                            )
+                            .padding()
+                        
+                        
+                        
+                        VStack(alignment: .leading) {
+                            Text(piece.pieceTitle)
+                                .bold()
+                                .font(.system(.title, design: .rounded))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.4)
+                            
+                            Text(piece.composer)
+                        }
+                        .padding()
+                        
+                        Spacer(minLength: 0)
+                        
+                            
+                        
+                    }.padding()
+                        .padding(.horizontal)
+                        .onTapGesture {
+                            self.selectedPiece = piece
+                            self.showPieceBottomSheet.toggle()
+                        }
+
+                }
             }
+          
             
         }
     }

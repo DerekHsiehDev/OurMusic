@@ -16,6 +16,7 @@ struct PracticeLogView: View {
     @State private var showPieceBottomSheet: Bool = false
     @StateObject var firebaseViewModel: FirebaseViewModel
     @State private var selectedPiece: UserPiece = UserPiece(pieceTitle: "", composer: "", iconColor: "")
+
     
     var body: some View {
         
@@ -142,7 +143,7 @@ struct PracticeLogView: View {
         }
         .padding(.vertical, 35)
         .padding(.bottom, 35)
-        .bottomSheet(isPresented: $showPieceBottomSheet, height: 500) {
+        .bottomSheet(isPresented: $showPieceBottomSheet, height: calculateBottomSheetHeight()) {
             PieceSelectionView(selectedPiece: $selectedPiece, showPieceBottomSheet: $showPieceBottomSheet, pieceArray: firebaseViewModel.pieceArray)
         }
         
@@ -153,6 +154,21 @@ struct PracticeLogView: View {
         
         
         
+    }
+    
+    func calculateBottomSheetHeight() -> CGFloat {
+        print(firebaseViewModel.pieceArray.count)
+        print(UIScreen.main.bounds.height)
+        
+        if CGFloat(firebaseViewModel.pieceArray.count * 145) > UIScreen.main.bounds.height {
+            
+            return UIScreen.main.bounds.height
+            
+        } else {
+            return CGFloat(firebaseViewModel.pieceArray.count * 145)
+        }
+        
+      
     }
 }
 //

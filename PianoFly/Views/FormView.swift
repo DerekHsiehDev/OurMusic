@@ -13,6 +13,7 @@ struct FormView: View {
     @State private var pieceTitle: String = ""
     @State private var composer: String = ""
     @State private var selectedColor: String = "purple"
+    @StateObject var firebaseViewModel: FirebaseViewModel
     
     var body: some View {
         
@@ -155,6 +156,7 @@ struct FormView: View {
                 return
             } else {
                 print("SUCCESSFULLY UPLOADED NEW PIECE TO DB")
+                firebaseViewModel.getAllPieces()
                 handler(true)
                 return
             }
@@ -179,8 +181,8 @@ struct FormView: View {
     }
 }
 
-struct FormView_Previews: PreviewProvider {
-    static var previews: some View {
-        FormView()
-    }
-}
+//struct FormView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        FormView()
+//    }
+//}

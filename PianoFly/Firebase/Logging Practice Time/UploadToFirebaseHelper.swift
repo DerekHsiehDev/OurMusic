@@ -76,9 +76,61 @@ class UploadToFirebaseHelper {
                 if doesExist {
                     // does exist
                     // need to update existing document with new practice minutes (+=)
+                    var newPracticeMinutes: Int = practiceMinutes
+                    
                     
                     self.getSingleDocumentFromDatabase(userID: userID, postID: dateString) { postModel in
-                        return
+                        print(postModel?.practiceMinutes)
+                        newPracticeMinutes += postModel?.practiceMinutes ?? 0
+                        var postData: [String: Any] = [
+                            DatabasePostField.practiceMinutes: newPracticeMinutes,
+                        ]
+                        // check if user is updating w a piece
+                        
+                        let practiceREF = self.REF.document(userID).collection(FirestoreDocumentCollectionNames.practice).document(dateString)
+                        
+                        if let piece = piece {
+                            if var pieceDict = postModel?.pieces {
+                                if pieceDict[piece.pieceTitle] != nil {
+                                    // already exists need to +=
+                                    pieceDict[piece.pieceTitle]! += practiceMinutes
+                                    for(key, value) in pieceDict {
+                                        postData[(key as? String)!] = value as? Any
+                                    }
+                                } else {
+                                    postData[piece.pieceTitle] = practiceMinutes
+                                }
+                            }
+                            
+                            
+                            // upload with piece
+                            
+                          
+                            
+                         
+
+                            practiceREF.updateData(postData) { err in
+                                if let err = err {
+                                    print(err.localizedDescription)
+                                    handler(true)
+                                    return
+                                } else {
+                                    print("SUCCESSFULLY UPDATED DOCUMENT")
+                                    handler(false)
+                                    return
+                                }
+                            }
+                            
+                        } else {
+                            // upload without piece
+                        }
+                      
+                  
+                        // upload
+                       
+                        
+                        
+                        
                     }
                 } else {
                     // create new piece
@@ -232,17 +284,46 @@ class UploadToFirebaseHelper {
         // path
         
         let docREF = REF.document(userID).collection(FirestoreDocumentCollectionNames.practice).document(postID)
-        
+        var postModel = PostModel(postID: "", practiceMinutes: 0, dateCreated: Date())
         docREF.getDocument { (document, error) in
+            
             if let document = document, document.exists {
-                let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
-                print("Document data: \(dataDescription)")
+                let documentData = document.data()
+                
+                var postID: String = ""
+                var practiceMinutes: Int = 0
+                var dateCreated: Date = Date()
+                var pieces: [String: Int] = [:]
+                    
+                print("doucment exists")
+                print("POST")
+                for data in documentData! {
+                    switch data.key {
+                    case DatabasePostField.postID:
+                        postID = data.value as? String ?? ""
+                    case DatabasePostField.practiceMinutes:
+                        practiceMinutes = data.value as? Int ?? 0
+                        print("PRACTICE MINUTES")
+                        print(practiceMinutes)
+                    case DatabasePostField.dateCreated:
+                        dateCreated = data.value as? Date ?? Date()
+                    default:
+                        pieces[data.key] = data.value as? Int ?? 0
+                    }
+                }
+                
+                
+                postModel = PostModel(postID: postID, practiceMinutes: practiceMinutes, dateCreated: dateCreated, pieces: pieces)
+                handler(postModel)
+
             } else {
                 print("Document does not exist")
+                handler(postModel)
             }
         }
         
-        handler(nil)
+     
+        
         return
 //        docREF.getDocument { document, error in
 //            if let document = document {
