@@ -47,6 +47,15 @@ class FirebaseViewModel: ObservableObject {
         }
     }
     
+    func getPracticeLog() {
+        if let userID = userID {
+            UploadToFirebaseHelper.instance.getPracticeLog(userID: userID) { returnedPostModels in
+                print(returnedPostModels.count)
+            }
+        }
+        
+    }
+    
     // MARK: PRIVATE FUNCTIONS
     
 //    private func populateSevenDaysLog(fullArray: [PostModel]?) {

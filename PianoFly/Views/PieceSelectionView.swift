@@ -26,7 +26,7 @@ struct PieceSelectionView: View {
                 
                 
                 
-            if CGFloat(pieceArray.count * 145) > UIScreen.main.bounds.height {
+            if CGFloat(pieceArray.count * 160) > UIScreen.main.bounds.height {
                 ScrollView(.vertical, showsIndicators: false) {
                     ForEach(pieceArray, id: \.self) { piece in
                         HStack {

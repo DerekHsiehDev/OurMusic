@@ -46,6 +46,7 @@ struct PracticeLogView: View {
                         .font(Font.title3.weight(.bold))
                     
                 }
+                .accentColor(.primary)
             }
             .padding(.horizontal)
             .padding(.top)
@@ -160,12 +161,12 @@ struct PracticeLogView: View {
         print(firebaseViewModel.pieceArray.count)
         print(UIScreen.main.bounds.height)
         
-        if CGFloat(firebaseViewModel.pieceArray.count * 145) > UIScreen.main.bounds.height {
+        if CGFloat(firebaseViewModel.pieceArray.count * 160) > UIScreen.main.bounds.height {
             
             return UIScreen.main.bounds.height
             
         } else {
-            return CGFloat(firebaseViewModel.pieceArray.count * 145)
+            return CGFloat(firebaseViewModel.pieceArray.count * 160)
         }
         
       

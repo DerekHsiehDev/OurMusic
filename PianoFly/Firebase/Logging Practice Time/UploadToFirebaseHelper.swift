@@ -254,17 +254,40 @@ class UploadToFirebaseHelper {
     
     
     func getPracticeLog(userID: String, handler: @escaping(_ posts: [PostModel]) ->()) {
-        var postArray = [PostModel]()
+        var postArray: [PostModel] = []
         // path to practice log collection
         let practiceREF = REF.document(userID).collection(FirestoreDocumentCollectionNames.practice)
         
         practiceREF.order(by: DatabasePostField.postID, descending: false).limit(to: 31).getDocuments { querySnapshot, error in
             if let snapshot = querySnapshot, snapshot.documents.count > 0 {
                 for document in snapshot.documents {
-                    if let userID = document.get(DatabasePostField.postID) as? String, let practiceMinutes = document.get(DatabasePostField.practiceMinutes) as? String, let dateTimestamp = document.get(DatabasePostField.dateCreated) as? Timestamp {
-//                        let newPost = PostModel(postID: userID, practiceMinutes: practiceMinutes, dateCreated: dateTimestamp.dateValue())
-//                        postArray.append(newPost)
+          
+                    let documentData = document.data()
+                    
+                    var postID: String = ""
+                    var practiceMinutes: Int = 0
+                    var dateCreated: Date = Date()
+                    var pieces: [String: Int] = [:]
+                    
+                    for data in documentData {
+                        switch data.key {
+                        case DatabasePostField.postID:
+                            postID = data.value as? String ?? ""
+                        case DatabasePostField.practiceMinutes:
+                            practiceMinutes = data.value as? Int ?? 0
+                            print("PRACTICE MINUTES")
+                            print(practiceMinutes)
+                        case DatabasePostField.dateCreated:
+                            dateCreated = data.value as? Date ?? Date()
+                        default:
+                            pieces[data.key] = data.value as? Int ?? 0
+                        }
                     }
+                    
+                    let newPost = PostModel(postID: postID, practiceMinutes: practiceMinutes, dateCreated: dateCreated, pieces: pieces)
+                    
+                        postArray.append(newPost)
+                    
                 }
                 handler(postArray)
                 print("GOT ALL DOCUEMNTS")

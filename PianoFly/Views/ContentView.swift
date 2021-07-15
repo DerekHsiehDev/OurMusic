@@ -64,6 +64,7 @@ struct ContentView: View {
 //                        print("FETCHED ALL USER POSTS")
 //                }
                 firebaseViewModel.getAllPieces()
+                firebaseViewModel.getPracticeLog()
                 
             }
             .bottomSheet(isPresented: $isShowingPieceView, height: (UIScreen.main.bounds.width) + 100) {
