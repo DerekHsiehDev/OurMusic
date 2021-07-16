@@ -33,7 +33,7 @@ struct ContentView: View {
                 VStack(spacing: 0) {
                     ZStack {
                         
-                        HomeView(selectedPiece: $selectedPiece, isShowingPieceView: $isShowingPieceView, isShowingFormView: $isShowingFormView, isShowingPracticeLogView: $isShowingPracticeLogView)
+                        HomeView(firebaseViewModel: firebaseViewModel, selectedPiece: $selectedPiece, isShowingPieceView: $isShowingPieceView, isShowingFormView: $isShowingFormView, isShowingPracticeLogView: $isShowingPracticeLogView)
                         
                             .opacity(self.index == 0 ? 1 : 0)
                             .zIndex(self.index == 0 ? 1 : 0)

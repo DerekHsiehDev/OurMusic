@@ -118,10 +118,19 @@ class FirebaseViewModel: ObservableObject {
     
     private func populatePieceList(postModelArray: [PostModel]) {
         
+        for piece in pieceArray {
+            let newPiece = Piece(composer: piece.composer, title: piece.pieceTitle, practiceArray: [], thisWeekPracticeMinutes: 0, allTimePracticeMinutes: 0, iconColor: piece.iconColor)
+            pieceList.append(newPiece)
+        }
+        
         for postModel in postModelArray {
             if postModel.pieces == nil {
                 // do nothing bc there are no pieces
-                print("empty")
+                
+                for i in 0..<pieceList.count {
+                    pieceList[i].practiceArray.append(PracticeDays(date: postModel.postID, practiceMinutes: 0))
+                }
+                
             } else {
                 // there are pieces here
                 

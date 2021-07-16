@@ -90,6 +90,7 @@ struct PracticeLogView: View {
                                 print("ERROR")
                             } else {
                                 print("SUCCESSFULLY UPLOADED POST TO FIREDB")
+                                // FIREBASE.UPDATE
                                 // get data from db
 
 //                                if let userID = userID {

@@ -59,7 +59,7 @@ struct PieceView: View {
                                 .bold()
                             
                             
-                            Text("minutes")
+                            Text("mins")
                                 .foregroundColor(.white.opacity(0.7))
                                 .font(.title3)
                             
@@ -92,7 +92,7 @@ struct PieceView: View {
                                 .bold()
                             
                             
-                            Text("minutes")
+                            Text("mins")
                                 .foregroundColor(.white.opacity(0.7))
                                 .font(.title3)
                             
