@@ -12,9 +12,9 @@ struct HomeView: View {
     @State var selectedIndex: Int = 0
     @State var date: Int = 5
     let pieceList: [Piece] = [
-        Piece(composer: "Chopin", title: "Piano Concerto No. 2", practiceArray: [PracticeDays(date: "7-10-2021", practiceMinutes: 13)], thisWeekPracticeMinutes: 70, allTimePracticeMinutes: 450, iconColor: Color.blue),
-        Piece(composer: "Bach", title: "Fugue", practiceArray: [PracticeDays(date: "7-10-2021", practiceMinutes: 13)], thisWeekPracticeMinutes: 70, allTimePracticeMinutes: 450, iconColor: Color.red),
-        Piece(composer: "Kapustin", title: "Concert Etude", practiceArray: [PracticeDays(date: "7-10-2021", practiceMinutes: 13)], thisWeekPracticeMinutes: 70, allTimePracticeMinutes: 450, iconColor: Color.orange),
+        Piece(composer: "Chopin", title: "Piano Concerto No. 2", practiceArray: [PracticeDays(date: "7-10-2021", practiceMinutes: 13)], thisWeekPracticeMinutes: 70, allTimePracticeMinutes: 450, iconColor: "blue"),
+        Piece(composer: "Bach", title: "Fugue", practiceArray: [PracticeDays(date: "7-10-2021", practiceMinutes: 13)], thisWeekPracticeMinutes: 70, allTimePracticeMinutes: 450, iconColor: "red"),
+        Piece(composer: "Kapustin", title: "Concert Etude", practiceArray: [PracticeDays(date: "7-10-2021", practiceMinutes: 13)], thisWeekPracticeMinutes: 70, allTimePracticeMinutes: 450, iconColor: "orange"),
         
     ]
     
@@ -171,7 +171,7 @@ struct HomeView: View {
                 VStack(spacing: 0) {
                     ForEach(pieceList, id: \.self) { piece in
                         
-                        PieceBreakdownView(pieceTitle: piece.title, practiceMinutes: piece.practiceArray.last?.practiceMinutes ?? 0, iconColor: piece.iconColor)
+                        PieceBreakdownView(pieceTitle: piece.title, practiceMinutes: piece.practiceArray.last?.practiceMinutes ?? 0, iconColor: Color(piece.iconColor))
                             .padding()
                             .onTapGesture {
                                 selectedPiece = piece

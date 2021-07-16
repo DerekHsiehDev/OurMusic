@@ -21,7 +21,7 @@ struct PieceView: View {
                     .background(
                     
                         RoundedRectangle(cornerRadius: 10)
-                            .fill(piece.iconColor)
+                            .fill(Color(piece.iconColor))
                             .shadow(color: Color.black.opacity(0.6), radius: 4, x: 0, y: 0)
                             .frame(width: 70, height: 70)
                     
@@ -174,6 +174,6 @@ struct PieceView: View {
 
 struct PieceView_Previews: PreviewProvider {
     static var previews: some View {
-        PieceView(piece: Piece(composer: "Chopin", title: "Piano Concerto No. 2", practiceArray: [PracticeDays(date: "7-10-2021", practiceMinutes: 12)], thisWeekPracticeMinutes: 150, allTimePracticeMinutes: 1200, iconColor: Color.blue))
+        PieceView(piece: Piece(composer: "Chopin", title: "Piano Concerto No. 2", practiceArray: [PracticeDays(date: "7-10-2021", practiceMinutes: 12)], thisWeekPracticeMinutes: 150, allTimePracticeMinutes: 1200, iconColor: "blue"))
     }
 }

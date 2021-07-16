@@ -64,11 +64,11 @@ struct ContentView: View {
 //                        print("FETCHED ALL USER POSTS")
 //                }
                 firebaseViewModel.getAllPieces()
-                firebaseViewModel.getPracticeLog()
+                
                 
             }
             .bottomSheet(isPresented: $isShowingPieceView, height: (UIScreen.main.bounds.width) + 100) {
-                PieceView(piece: self.selectedPiece ?? Piece(composer: "", title: "", practiceArray: [PracticeDays(date: "7-10-2021", practiceMinutes: 123)], thisWeekPracticeMinutes: 0, allTimePracticeMinutes: 0, iconColor: Color.clear))
+                PieceView(piece: self.selectedPiece ?? Piece(composer: "", title: "", practiceArray: [PracticeDays(date: "7-10-2021", practiceMinutes: 123)], thisWeekPracticeMinutes: 0, allTimePracticeMinutes: 0, iconColor: "purple"))
             }
             .sheet(isPresented: $isShowingFormView) {
                 FormView(firebaseViewModel: firebaseViewModel)

@@ -11,15 +11,15 @@ import SwiftUI
 struct Piece: Hashable {
     let composer: String
     let title: String
-    let practiceArray: [PracticeDays]
-    let thisWeekPracticeMinutes: Int
-    let allTimePracticeMinutes: Int
-    let iconColor: Color
+    var practiceArray: [PracticeDays]
+    var thisWeekPracticeMinutes: Int
+    var allTimePracticeMinutes: Int
+    var iconColor: String
 }
 
 struct PracticeDays: Hashable {
     let date: String
-    let practiceMinutes: Int
+    var practiceMinutes: Int
 }
 
 
