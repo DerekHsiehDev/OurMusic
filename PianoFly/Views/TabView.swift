@@ -94,6 +94,7 @@ struct TabView: View {
   
         }
         .padding(.horizontal)
+        .padding(.top)
     }
 }
 

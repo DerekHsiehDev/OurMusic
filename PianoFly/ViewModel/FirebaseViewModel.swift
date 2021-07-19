@@ -125,6 +125,9 @@ class FirebaseViewModel: ObservableObject {
                 // found
                 // check if practice day alreadcy exists
                 
+                pieceList[index].allTimePracticeMinutes += practiceMinutes
+                pieceList[index].thisWeekPracticeMinutes += practiceMinutes
+                
                 for (index2, day) in item.practiceArray.enumerated() {
                     print(day.date)
                     if day.date == dateString {
