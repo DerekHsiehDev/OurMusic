@@ -11,7 +11,7 @@ struct PieceSelectionView: View {
     @Binding var selectedPiece: UserPiece
     @Binding var showPieceBottomSheet: Bool
     
-    var pieceArray: [UserPiece]
+    @StateObject var firebaseViewModel: FirebaseViewModel
     
     var body: some View {
         VStack {
@@ -26,9 +26,9 @@ struct PieceSelectionView: View {
                 
                 
                 
-            if CGFloat(pieceArray.count * 160) > UIScreen.main.bounds.height {
+            if CGFloat(firebaseViewModel.pieceArray.count * 160) > UIScreen.main.bounds.height {
                 ScrollView(.vertical, showsIndicators: false) {
-                    ForEach(pieceArray, id: \.self) { piece in
+                    ForEach(firebaseViewModel.pieceArray, id: \.self) { piece in
                         HStack {
                             Text(returnIconName(pieceTitle: piece.pieceTitle))
                                 .foregroundColor(.white)
@@ -52,14 +52,27 @@ struct PieceSelectionView: View {
                                     .font(.system(.title, design: .rounded))
                                     .lineLimit(1)
                                     .minimumScaleFactor(0.4)
-                                
+
                                 Text(piece.composer)
                             }
                             .padding()
                             
+                           
+                            
                             Spacer(minLength: 0)
                             
+                            Button(action: {
                                 
+                                deletePieceFromList(piece: piece)
+                                
+                            }) {
+                                Text(Image(systemName: "xmark"))
+                                    .fontWeight(.bold)
+                                
+                            }
+                            .accentColor(.red)
+                         
+                        
                             
                         }.padding()
                             .padding(.horizontal)
@@ -72,7 +85,7 @@ struct PieceSelectionView: View {
                 }
                 .padding()
             } else {
-                ForEach(pieceArray, id: \.self) { piece in
+                ForEach(firebaseViewModel.pieceArray, id: \.self) { piece in
                     HStack {
                         Text(returnIconName(pieceTitle: piece.pieceTitle))
                             .foregroundColor(.white)
@@ -103,6 +116,15 @@ struct PieceSelectionView: View {
                         
                         Spacer(minLength: 0)
                         
+                        Button(action: {
+                            deletePieceFromList(piece: piece)
+                        }) {
+                            Text(Image(systemName: "xmark"))
+                                .fontWeight(.bold)
+                            
+                        }
+                        .accentColor(.red)
+                        
                             
                         
                     }.padding()
@@ -116,6 +138,16 @@ struct PieceSelectionView: View {
             }
           
             
+        }
+    }
+    
+     func deletePieceFromList(piece: UserPiece) {
+        
+        UploadToFirebaseHelper.instance.deletePiece(documentID: piece.pieceTitle)
+        for(index, item) in firebaseViewModel.pieceArray.enumerated() {
+            if item == piece {
+                firebaseViewModel.pieceArray.remove(at: index)
+            }
         }
     }
     
@@ -137,10 +169,10 @@ struct PieceSelectionView: View {
     }
 }
 
-struct PieceSelectionView_Previews: PreviewProvider {
-
-    static var previews: some View {
-        PieceSelectionView(selectedPiece: .constant(UserPiece(pieceTitle: "", composer: "", iconColor: "")), showPieceBottomSheet: .constant(true), pieceArray: [UserPiece(pieceTitle: "Piano Concerto No. 2", composer: "Chopin", iconColor: "blue"), UserPiece(pieceTitle: "Fugue", composer: "Bach", iconColor: "red")])
-        
-    }
-}
+//struct PieceSelectionView_Previews: PreviewProvider {
+//
+//    static var previews: some View {
+//        PieceSelectionView(selectedPiece: .constant(UserPiece(pieceTitle: "", composer: "", iconColor: "")), showPieceBottomSheet: .constant(true), pieceArray: [UserPiece(pieceTitle: "Piano Concerto No. 2", composer: "Chopin", iconColor: "blue"), UserPiece(pieceTitle: "Fugue", composer: "Bach", iconColor: "red")])
+//
+//    }
+//}

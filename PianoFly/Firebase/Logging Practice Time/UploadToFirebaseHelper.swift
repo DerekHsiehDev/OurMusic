@@ -252,6 +252,24 @@ class UploadToFirebaseHelper {
 //
 //    }
     
+    func deletePiece(documentID: String) {
+        if let userID = userID {
+            db.collection(FirestoreDocumentCollectionNames.pieces).document(userID).collection(FirestoreDocumentCollectionNames.myPieces).document(documentID).delete { err in
+                
+                   if let err = err {
+                       print(err.localizedDescription.uppercased())
+                       print("ERROR REMOVING DOCUMEBNT")
+                   } else {
+                       print("SUCCESSFULLY DELETED:\(documentID)")
+                   }
+               
+            }
+        } else {
+            print("NOT LOGGED IN")
+        }
+  
+    }
+    
     
     func getPracticeLog(userID: String, handler: @escaping(_ posts: [PostModel]) ->()) {
         var postArray: [PostModel] = []

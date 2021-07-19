@@ -148,7 +148,7 @@ struct PracticeLogView: View {
         .padding(.vertical, 35)
         .padding(.bottom, 35)
         .bottomSheet(isPresented: $showPieceBottomSheet, height: calculateBottomSheetHeight()) {
-            PieceSelectionView(selectedPiece: $selectedPiece, showPieceBottomSheet: $showPieceBottomSheet, pieceArray: firebaseViewModel.pieceArray)
+            PieceSelectionView(selectedPiece: $selectedPiece, showPieceBottomSheet: $showPieceBottomSheet, firebaseViewModel: firebaseViewModel)
         }
         
         
