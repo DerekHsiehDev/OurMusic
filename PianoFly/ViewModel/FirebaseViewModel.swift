@@ -53,6 +53,58 @@ class FirebaseViewModel: ObservableObject {
  
     }
     
+    func updateSevenDayLog(dateString: String, practiceMinutes: Int, piece: UserPiece?) {
+            
+        for(index, item) in lastSevenDaysLog.enumerated() {
+                if item.postID == dateString {
+                    lastSevenDaysLog[index].practiceMinutes += practiceMinutes
+                    
+                    if let piece = piece {
+                        // user had selected piece
+                        
+                        // udpate the piece list here
+                        
+                        self.updatePieceList(piece: piece, dateString: dateString, practiceMinutes: practiceMinutes)
+                        
+                        if item.pieces?[piece.pieceTitle] == nil {
+                            lastSevenDaysLog[index].pieces?[piece.pieceTitle] = practiceMinutes
+                            
+                         
+                            
+                       
+                        } else {
+                            lastSevenDaysLog[index].pieces?[piece.pieceTitle]! += practiceMinutes
+                        }
+                        
+                        
+                            
+                    }
+                    
+                    
+                }
+//                else {
+//                    var newPost: PostModel
+//                    if let piece = piece {
+//
+//
+//                        newPost = PostModel(postID: dateString, practiceMinutes: practiceMinutes, dateCreated: Date(), pieces: [piece.pieceTitle: practiceMinutes])
+//                    } else {
+//                        newPost = PostModel(postID: dateString, practiceMinutes: practiceMinutes, dateCreated: Date())
+//                    }
+//
+//                    lastSevenDaysLog.append(newPost)
+//                }
+            
+  
+        }
+    }
+    
+ 
+    func updateTodaysPracticeMinutes(practiceMinutes: Int) {
+        
+    }
+
+    
     
     func getPracticeLog() {
         if let userID = userID {
@@ -65,6 +117,32 @@ class FirebaseViewModel: ObservableObject {
     }
     
     // MARK: PRIVATE FUNCTIONS
+    
+    
+    private func updatePieceList(piece: UserPiece, dateString: String, practiceMinutes: Int) {
+        for(index, item) in pieceList.enumerated() {
+            if item.title == piece.pieceTitle {
+                // found
+                // check if practice day alreadcy exists
+                
+                for (index2, day) in item.practiceArray.enumerated() {
+                    print(day.date)
+                    if day.date == dateString {
+                        
+                        print(pieceList[index].practiceArray[index2].practiceMinutes)
+                        pieceList[index].practiceArray[index2].practiceMinutes  += practiceMinutes
+                        print("UPDATED")
+                        return
+                    }
+                }
+                
+            let newPracticeDay = PracticeDays(date: dateString, practiceMinutes: practiceMinutes)
+                pieceList[index].practiceArray.append(newPracticeDay)
+                print("UPDATED")
+            }
+        }
+     }
+     
     
     private func populateSevenDaysLog(fullArray: [PostModel]?) {
 
@@ -174,18 +252,6 @@ class FirebaseViewModel: ObservableObject {
         
     }
     
-    private func returnElementOfPieceFromPieceList(pieceTitle: String) -> Int {
-        var counter = 0
-        for piece in pieceList {
-            if piece.title == pieceTitle {
-                break
-            } else {
-                counter += 1
-            }
-        }
-        
-        return counter
-    }
     
     private func checkIfPieceExistsInList(pieceTitle: String) -> Bool {
         for piece in self.pieceList {
@@ -206,24 +272,6 @@ class FirebaseViewModel: ObservableObject {
         return nil
     }
 
-    private func updateSevenDaysLog(fullArray: [PostModel]) {
-        // Find and update today's practice minutes
-        let currentDate = Date()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MM-dd-yyyy"
-        let stringDate = formatter.string(from: currentDate)
-
-
-        withAnimation(.linear) {
-            if Int(exactly: fullArray.last!.practiceMinutes)! > self.highestInSevenDayLog { self.highestInSevenDayLog = Int(exactly: fullArray.last!.practiceMinutes)! }
-
-//            let post = PostModel(postID: stringDate, practiceMinutes: "0", dateCreated: Date())
-
-//            self.lastSevenDaysLog[6] = fullArray.last ?? post
-            print(lastSevenDaysLog)
-        }
-
-    }
-
+    
 
 }

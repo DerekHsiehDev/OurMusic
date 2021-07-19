@@ -91,6 +91,8 @@ struct PracticeLogView: View {
                             } else {
                                 print("SUCCESSFULLY UPLOADED POST TO FIREDB")
                                 // FIREBASE.UPDATE
+                                
+                                firebaseViewModel.updateSevenDayLog(dateString: currentDate, practiceMinutes: practiceMinutes, piece: selectedPiece.pieceTitle == "" ? nil : selectedPiece)
                                 // get data from db
 
 //                                if let userID = userID {
