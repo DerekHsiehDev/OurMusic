@@ -13,6 +13,13 @@ class DateHelper {
     
     // MARK: PUBLIC FUNCTIONS
     
+    
+    func formatDate(date: Date, dateFormat: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = dateFormat
+        let date = formatter.string(from: date)
+        return date
+    }
     func getCurrentDate(handler: @escaping(_ currentDate: String) -> ()) {
         let currentDate = Date()
         
@@ -26,6 +33,14 @@ class DateHelper {
         
         handler(date)
         return
+    }
+    
+    func convertDateToCustomString(dateToConvert: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM-dd-yyyy"
+        
+        let date = formatter.string(from: dateToConvert)
+        return date
     }
     
     func convertLongDateToShortDate(longDate: Date) -> String {

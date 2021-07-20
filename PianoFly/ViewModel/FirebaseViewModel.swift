@@ -49,8 +49,14 @@ class FirebaseViewModel: ObservableObject {
         UploadToFirebaseHelper.instance.getPieces { pieceArray in
             self.pieceArray = pieceArray
             self.getPracticeLog()
+            print(pieceArray)
         }
  
+    }
+    
+    func updateNewPiece(pieceTitle: String, composer: String, iconColor: String) {
+        let newUserPiece: UserPiece = UserPiece(pieceTitle: pieceTitle, composer: composer, iconColor: iconColor)
+        pieceArray.append(newUserPiece)
     }
     
     func updateSevenDayLog(dateString: String, practiceMinutes: Int, piece: UserPiece?) {

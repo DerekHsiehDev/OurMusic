@@ -164,12 +164,12 @@ struct PracticeLogView: View {
         print(firebaseViewModel.pieceArray.count)
         print(UIScreen.main.bounds.height)
         
-        if CGFloat(firebaseViewModel.pieceArray.count * 160) > UIScreen.main.bounds.height {
+        if CGFloat(firebaseViewModel.pieceArray.count * 170) > UIScreen.main.bounds.height {
             
             return UIScreen.main.bounds.height
             
         } else {
-            return CGFloat(firebaseViewModel.pieceArray.count * 160)
+            return CGFloat(firebaseViewModel.pieceArray.count * 170)
         }
         
       

@@ -84,6 +84,7 @@ struct PieceSelectionView: View {
                     }
                 }
                 .padding()
+                .padding(.bottom)
             } else {
                 ForEach(firebaseViewModel.pieceArray, id: \.self) { piece in
                     HStack {
@@ -129,6 +130,7 @@ struct PieceSelectionView: View {
                         
                     }.padding()
                         .padding(.horizontal)
+                        .padding(.bottom)
                         .onTapGesture {
                             self.selectedPiece = piece
                             self.showPieceBottomSheet.toggle()

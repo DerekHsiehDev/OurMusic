@@ -22,6 +22,7 @@ struct HomeView: View {
     @Binding var isShowingPieceView: Bool
     @Binding var isShowingFormView: Bool
     @Binding var isShowingPracticeLogView: Bool
+    @State var currentDayShowing: Date = Date()
     
     var body: some View {
         VStack {
@@ -67,18 +68,22 @@ struct HomeView: View {
                 HStack {
                     // Date picker
                     VStack(spacing: 10) {
-                        Button(action: {}) {
+                        Button(action: {
+                            
+                            increaseDate()
+                            
+                        }) {
                             Image(systemName: "chevron.up")
                         }
                         .accentColor(.white)
                         
                         VStack(spacing: 0) {
-                            Text("5")
+                            Text(DateHelper.instance.formatDate(date: currentDayShowing, dateFormat: "d"))
                                 .bold()
                                 .font(.largeTitle)
                             .foregroundColor(.white)
                             
-                            Text("Jul")
+                            Text(DateHelper.instance.formatDate(date: currentDayShowing, dateFormat: "MMM"))
                                 .bold()
                                 .font(.title2)
                                 .foregroundColor(.white)
@@ -86,7 +91,11 @@ struct HomeView: View {
           
                         
                         
-                        Button(action: {}) {
+                        Button(action: {
+                            
+                            decreaseDate()
+                            
+                        }) {
                             Image(systemName: "chevron.down")
                         }
                         .accentColor(.white)
@@ -145,12 +154,12 @@ struct HomeView: View {
                         
                         Text("pieces")
                             .lineLimit(1)
-                            .minimumScaleFactor(0.4)
+                            .minimumScaleFactor(0.8)
                             .foregroundColor(.white)
+                            .padding(.horizontal)
                         
                     }
                     .padding()
-                    .padding(.horizontal)
                     .background(Color.MyTheme.LightPurple)
                     .clipShape(RoundedRectangle(cornerRadius: 15))
                     .padding(.horizontal)
@@ -169,19 +178,30 @@ struct HomeView: View {
                 // Piece breakdown
                 
                 VStack(spacing: 0) {
-                    ForEach(firebaseViewModel.pieceList, id: \.self) { piece in
+                    
+                    if checkIfUserPracticedOnADayThroughLastSevenDaysLog(date: currentDayShowing, log: firebaseViewModel.lastSevenDaysLog) {
                         
-                        if piece.practiceArray.last?.practiceMinutes != 0 {
-                            PieceBreakdownView(pieceTitle: piece.title, practiceMinutes: piece.practiceArray.last?.practiceMinutes ?? 0, iconColor: Color(piece.iconColor))
-                                .padding()
-                                .onTapGesture {
-                                    selectedPiece = piece
-                                    isShowingPieceView.toggle()
-                                }
+                        ForEach(firebaseViewModel.pieceList, id: \.self) { piece in
+                            
+                            if returnPieceArrayElementFromDateString(date: currentDayShowing, piece: piece) != 0 {
+                                PieceBreakdownView(pieceTitle: piece.title, practiceMinutes: returnPieceArrayElementFromDateString(date: currentDayShowing, piece: piece), iconColor: Color(piece.iconColor))
+                                    .padding()
+                                    .onTapGesture {
+                                        selectedPiece = piece
+                                        isShowingPieceView.toggle()
+                                    }
+                            }
+                         
+                            
                         }
-                     
-                        
+                    } else {
+                        Text("No Practice Log Yet")
+                            .foregroundColor(.white)
+                            .frame(width: UIScreen.main.bounds.width - 60)
+                            .padding()
                     }
+                 
+                
                 }
                 .background(Color.MyTheme.LightPurple)
                 .clipShape(RoundedRectangle(cornerRadius: 15))
@@ -196,6 +216,50 @@ struct HomeView: View {
         
         
     }
+    
+    func returnPieceArrayElementFromDateString(date: Date, piece: Piece) -> Int {
+        
+        let dateString = DateHelper.instance.formatDate(date: date, dateFormat: "MM-dd-yyyy")
+        
+        for practice in piece.practiceArray {
+            if practice.date == dateString {
+                return practice.practiceMinutes
+            }
+        }
+        
+        
+        
+        return 0
+    }
+    
+    func checkIfUserPracticedOnADayThroughLastSevenDaysLog(date: Date, log: [PostModel]) -> Bool {
+        let dateString = DateHelper.instance.formatDate(date: date, dateFormat: "MM-dd-yyyy")
+        for post in log {
+            if post.postID == dateString {
+                if post.practiceMinutes == 0 {
+                    return false
+                } else {
+                    return true
+                }
+            }
+        }
+        
+        return false
+    }
+    
+    func increaseDate() {
+        let newDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDayShowing)!
+        // check if new date is greater than current day - cant go over
+        if newDate < Date() {
+            currentDayShowing = newDate
+        }
+    }
+    
+    func decreaseDate() {
+        currentDayShowing = Calendar.current.date(byAdding: .day, value: -1, to: currentDayShowing)!
+    }
+    
+    
 }
 
 //struct HomeView_Previews: PreviewProvider {
