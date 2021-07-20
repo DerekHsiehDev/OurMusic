@@ -280,6 +280,7 @@ struct Login : View {
                         .foregroundColor(.black)
                     
                     TextField("Enter Email Address", text: self.$mail)
+                        .keyboardType(.emailAddress)
                     
                 }.padding(.vertical, 20)
                 
@@ -392,6 +393,7 @@ struct SignUp : View {
                         .foregroundColor(.black)
                     
                     TextField("Enter Email Address", text: self.$mail)
+                        .keyboardType(.emailAddress)
                     
                 }.padding(.vertical, 20)
                 
