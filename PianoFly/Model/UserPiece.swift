@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct UserPiece: Hashable {
+struct UserPiece: Hashable, Codable {
     let pieceTitle: String
     let composer: String
     let iconColor: String

@@ -9,6 +9,8 @@
 import SwiftUI
 import FirebaseAuth
 import FirebaseFirestore
+import BottomSheet
+import SSToastMessage
 
 
 struct SignUpView: View {
@@ -48,6 +50,9 @@ struct Home : View {
     @State var showError: Bool = false
     @State var index = 0
     @State var showOnboardingForSignupWithApple: Bool = false
+    @State var showResetPasswordAlert: Bool = false
+    let capsuleWidth = UIScreen.main.bounds.width - 100
+    @State var showPassResetToast: Bool = false
     @Environment(\.presentationMode) var presentationMode
     
     var body : some View {
@@ -127,6 +132,10 @@ struct Home : View {
                 
                 Button(action: {
                     
+                    // forget password logic
+                    
+                    showResetPasswordAlert.toggle()
+                    
                 }) {
                     
                     Text("Forget Password?")
@@ -134,6 +143,8 @@ struct Home : View {
                 
                 }
                 .padding(.top, 20)
+                
+                
             }
             
             HStack(spacing: 15){
@@ -181,6 +192,7 @@ struct Home : View {
         
             
         }
+        
         .padding()
         .fullScreenCover(isPresented: $showOnboardingForSignupWithApple, onDismiss: {
             self.presentationMode.wrappedValue.dismiss()
@@ -191,10 +203,41 @@ struct Home : View {
         .alert(isPresented: $showError, content: {
             return Alert(title: Text("Error signing in with Apple 😰"))
         })
+        .bottomSheet(isPresented: $showResetPasswordAlert, height: 500) {
+            ForgetPassword(showPassToast: $showPassResetToast, showAlert: $showResetPasswordAlert)
+        }
+        .present(isPresented: self.$showPassResetToast, type: .floater(), position: .top,  animation: Animation.spring(), closeOnTapOutside: true) {
+                 self.createTopFloaterView()
+             }
+
         
     }
     
     // MARK: FUNCTIONS
+    
+    func createTopFloaterView() -> some View {
+        VStack(alignment: .center) {
+            
+             Text("Sent password reset to your email")
+                .foregroundColor(.black)
+                .bold()
+                .font(.title2)
+            
+//            ZStack(alignment: .leading) {
+//                Capsule()
+//                    .frame(width: capsuleWidth, height: 5)
+////                    .foregroundColor(Color(returnColorForTotalWorkTime(totalWorkTime: WorkMinutesTotal)[0]))
+//                Capsule()
+//                    .frame(width: CGFloat(Double(WorkMinutesTotal) / Double(WorkMinutesTotal + returnMinutesUntilNextRank(totalWorkTime: WorkMinutesTotal))) * capsuleWidth, height: 5)
+//                    .foregroundColor(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)))
+//            }
+            
+        }
+        .frame(width: UIScreen.main.bounds.width - 30, height: 100)
+        .background(Color.white.opacity(0.8))
+        .cornerRadius(15)
+        .shadow(color: Color.black.opacity(0.8), radius: 0.25, x: 0, y: 0)
+    }
     
     func connectToFirebase(name: String, email: String, provider: String, credential: AuthCredential) {
         

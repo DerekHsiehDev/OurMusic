@@ -117,7 +117,7 @@ struct HomeView: View {
                                 
                             .foregroundColor(.clear)
                             
-                            Text("104")
+                            Text("\(self.returnTodaysPracticeMinutes() == -1 ? "" : "\(self.returnTodaysPracticeMinutes())")")
                                 .bold()
                                 .lineLimit(1)
                                 .font(.largeTitle)
@@ -140,13 +140,13 @@ struct HomeView: View {
                             .font(.title.weight(.bold))
                         
                         ZStack {
-                            Text("104")
+                            Text("\(4)")
                                 .bold()
                                 .font(.largeTitle)
                                 .lineLimit(1)
                             .foregroundColor(.clear)
                             
-                            Text("4")
+                            Text("\(self.returnNumberOfPieces() == -1 ? "" : "\(self.returnNumberOfPieces())")")
                                 .bold()
                                 .font(.largeTitle)
                             .foregroundColor(.white)
@@ -217,12 +217,34 @@ struct HomeView: View {
         
     }
     
+    func returnNumberOfPieces() -> Int {
+        for log in firebaseViewModel.lastSevenDaysLog {
+            if log.postID == DateHelper.instance.convertDateToCustomString(dateToConvert: currentDayShowing) {
+                
+                return log.pieces?.count ?? 0
+            }
+        }
+        
+        return -1
+    }
+    
+    func returnTodaysPracticeMinutes() -> Int {
+        for log in firebaseViewModel.lastSevenDaysLog {
+            if log.postID == DateHelper.instance.convertDateToCustomString(dateToConvert: currentDayShowing) {
+                return log.practiceMinutes
+            }
+            
+        }
+        return -1
+    }
+    
     func returnPieceArrayElementFromDateString(date: Date, piece: Piece) -> Int {
         
         let dateString = DateHelper.instance.formatDate(date: date, dateFormat: "MM-dd-yyyy")
         
         for practice in piece.practiceArray {
             if practice.date == dateString {
+                
                 return practice.practiceMinutes
             }
         }

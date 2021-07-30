@@ -45,9 +45,44 @@ class FirebaseViewModel: ObservableObject {
 //        }
 //    }
     
+    func savePieceArrayToUserDefaults(pieceArray: [UserPiece]) {
+        do {
+            let encoder = JSONEncoder()
+            
+            let data = try encoder.encode(pieceArray)
+            
+            UserDefaults.standard.set(data, forKey: CurrentUserDefaults.pieceArray)
+        } catch {
+            print("UNABLE TO SAVE PIECE ARRAY TO USER DEFAUTLS")
+        }
+    }
+    
+    func retrievePieceArrayFromUserDefaults(handler: @escaping(_ pieceArray: [UserPiece]) ->()) {
+        
+        if let data = UserDefaults.standard.data(forKey: CurrentUserDefaults.pieceArray) {
+            do {
+                // Create JSON Decoder
+                let decoder = JSONDecoder()
+
+                // Decode Note
+                let pieceArray = try decoder.decode([UserPiece].self, from: data)
+                self.pieceArray = pieceArray
+                handler(pieceArray)
+            } catch {
+                print("Unable to Decode piece array (\(error))")
+            }
+        } else {
+            handler([])
+        }
+        
+        
+        
+    }
+    
     func getAllPieces() {
         UploadToFirebaseHelper.instance.getPieces { pieceArray in
             self.pieceArray = pieceArray
+            self.savePieceArrayToUserDefaults(pieceArray: pieceArray)
             self.getPracticeLog()
             print(pieceArray)
         }
@@ -57,6 +92,7 @@ class FirebaseViewModel: ObservableObject {
     func updateNewPiece(pieceTitle: String, composer: String, iconColor: String) {
         let newUserPiece: UserPiece = UserPiece(pieceTitle: pieceTitle, composer: composer, iconColor: iconColor)
         pieceArray.append(newUserPiece)
+        savePieceArrayToUserDefaults(pieceArray: pieceArray)
     }
     
     func updateSevenDayLog(dateString: String, practiceMinutes: Int, piece: UserPiece?) {
@@ -116,6 +152,7 @@ class FirebaseViewModel: ObservableObject {
         if let userID = userID {
             UploadToFirebaseHelper.instance.getPracticeLog(userID: userID) { returnedPostModels in
                 self.populateSevenDaysLog(fullArray: returnedPostModels)
+                print(returnedPostModels)
                 self.populatePieceList(postModelArray: self.lastSevenDaysLog)
             }
         }
@@ -139,7 +176,7 @@ class FirebaseViewModel: ObservableObject {
                     if day.date == dateString {
                         
                         print(pieceList[index].practiceArray[index2].practiceMinutes)
-                        pieceList[index].practiceArray[index2].practiceMinutes  += practiceMinutes
+                        pieceList[index].practiceArray[index2].practiceMinutes += practiceMinutes
                         print("UPDATED")
                         return
                     }

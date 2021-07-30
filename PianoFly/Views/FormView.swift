@@ -158,6 +158,7 @@ struct FormView: View {
                 print("SUCCESSFULLY UPLOADED NEW PIECE TO DB")
 //                firebaseViewModel.getAllPieces()
                 firebaseViewModel.updateNewPiece(pieceTitle: self.pieceTitle, composer: self.composer, iconColor: self.selectedColor)
+                firebaseViewModel.getAllPieces()
                 handler(true)
                 return
             }

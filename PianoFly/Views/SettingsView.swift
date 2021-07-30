@@ -15,6 +15,7 @@ struct SettingsView: View {
     @AppStorage(CurrentUserDefaults.firstName) var firstName: String?
     @AppStorage(CurrentUserDefaults.lastName) var lastName: String?
     @AppStorage(CurrentUserDefaults.email) var email: String?
+    @StateObject var firebaseViewModel: FirebaseViewModel
     
     var body: some View {
         VStack {
@@ -27,7 +28,10 @@ struct SettingsView: View {
                 
                 
                 SignInWithEmail.instance.signOutWithEmail { isFinished in
-                    self.index = 0
+                    firebaseViewModel.lastSevenDaysLog = []
+                    firebaseViewModel.pieceArray = []
+                    firebaseViewModel.pieceList = []
+                    
                 }
                 
                 
@@ -44,6 +48,6 @@ struct SettingsView: View {
 struct SettingsView_Previews: PreviewProvider {
     
     static var previews: some View {
-        SettingsView(index: .constant(0))
+        SettingsView(index: .constant(0), firebaseViewModel: FirebaseViewModel())
     }
 }
