@@ -10,22 +10,26 @@ import SwiftUI
 struct PieceSelectionView: View {
     @Binding var selectedPiece: UserPiece
     @Binding var showPieceBottomSheet: Bool
-    
+    @State private var showAlert = false
+    @State var deletedPiece: UserPiece? = nil
     @StateObject var firebaseViewModel: FirebaseViewModel
     
     var body: some View {
         VStack {
             
-            Text("Select one of your pieces to add practice minutes to")
-                .font(.title2)
-                   .multilineTextAlignment(.center)
-                   .lineLimit(nil)
-                .fixedSize(horizontal: false, vertical: true)
-                .padding()
-                .padding(.top)
-                
-                
-                
+            VStack {
+                Text("Select one of your pieces to add practice minutes to")
+                    .fontWeight(.semibold)
+                    .font(.title2)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding()
+                    .padding(.top)
+            }
+            
+            
+            
             if CGFloat(firebaseViewModel.pieceArray.count * 160) > UIScreen.main.bounds.height {
                 ScrollView(.vertical, showsIndicators: false) {
                     ForEach(firebaseViewModel.pieceArray, id: \.self) { piece in
@@ -35,12 +39,12 @@ struct PieceSelectionView: View {
                                 .font(.title2)
                                 .bold()
                                 .background(
-                                
+                                    
                                     RoundedRectangle(cornerRadius: 10)
                                         .fill(Color(piece.iconColor))
                                         .shadow(color: Color.black.opacity(0.6), radius: 4, x: 0, y: 0)
                                         .frame(width: 70, height: 70)
-                                
+                                    
                                 )
                                 .padding()
                             
@@ -52,35 +56,35 @@ struct PieceSelectionView: View {
                                     .font(.system(.title, design: .rounded))
                                     .lineLimit(1)
                                     .minimumScaleFactor(0.4)
-
+                                
                                 Text(piece.composer)
                             }
                             .padding()
                             
-                           
+                            
                             
                             Spacer(minLength: 0)
                             
                             Button(action: {
-                                
-                                deletePieceFromList(piece: piece)
-                                
+                                showAlert.toggle()
+                                //                                deletePieceFromList(piece: piece)
+                                self.deletedPiece = piece
                             }) {
                                 Text(Image(systemName: "xmark"))
                                     .fontWeight(.bold)
                                 
                             }
                             .accentColor(.red)
-                         
-                        
+                            
+                            
                             
                         }.padding()
-                            .padding(.horizontal)
-                            .onTapGesture {
-                                self.selectedPiece = piece
-                                self.showPieceBottomSheet.toggle()
-                            }
-
+                        .padding(.horizontal)
+                        .onTapGesture {
+                            self.selectedPiece = piece
+                            self.showPieceBottomSheet.toggle()
+                        }
+                        
                     }
                 }
                 .padding()
@@ -93,12 +97,12 @@ struct PieceSelectionView: View {
                             .font(.title2)
                             .bold()
                             .background(
-                            
+                                
                                 RoundedRectangle(cornerRadius: 10)
                                     .fill(Color(piece.iconColor))
                                     .shadow(color: Color.black.opacity(0.6), radius: 4, x: 0, y: 0)
                                     .frame(width: 70, height: 70)
-                            
+                                
                             )
                             .padding()
                         
@@ -118,7 +122,9 @@ struct PieceSelectionView: View {
                         Spacer(minLength: 0)
                         
                         Button(action: {
-                            deletePieceFromList(piece: piece)
+                            showAlert.toggle()
+                            self.deletedPiece = piece
+                            //                            deletePieceFromList(piece: piece)
                         }) {
                             Text(Image(systemName: "xmark"))
                                 .fontWeight(.bold)
@@ -126,31 +132,44 @@ struct PieceSelectionView: View {
                         }
                         .accentColor(.red)
                         
-                            
+                        
                         
                     }.padding()
-                        .padding(.horizontal)
-                        .padding(.bottom)
-                        .onTapGesture {
-                            self.selectedPiece = piece
-                            self.showPieceBottomSheet.toggle()
-                        }
-
+                    .padding(.horizontal)
+                    .padding(.bottom)
+                    .onTapGesture {
+                        self.selectedPiece = piece
+                        self.showPieceBottomSheet.toggle()
+                    }
+                    
                 }
             }
-          
             
+            
+        }
+        .alert(isPresented: $showAlert) {
+            let button = Alert.Button.destructive(Text("Yes")) {
+                self.deletePieceFromList()
+                        }
+            return Alert(title: Text("Are you sure you want to delete this piece?"), message: Text("All previous records of this piece will be deleted"), primaryButton: button, secondaryButton: .cancel(Text("No")))
         }
     }
     
-     func deletePieceFromList(piece: UserPiece) {
-        
-        UploadToFirebaseHelper.instance.deletePiece(documentID: piece.pieceTitle)
-        for(index, item) in firebaseViewModel.pieceArray.enumerated() {
-            if item == piece {
-                firebaseViewModel.pieceArray.remove(at: index)
+    func deletePieceFromList() {
+        let piece = deletedPiece
+        if piece == nil {
+            return
+        } else {
+            UploadToFirebaseHelper.instance.deletePiece(documentID: piece!.pieceTitle)
+            for(index, item) in firebaseViewModel.pieceArray.enumerated() {
+                if item == piece {
+                    firebaseViewModel.pieceArray.remove(at: index)
+                }
             }
+            
+            firebaseViewModel.savePieceArrayToUserDefaults(pieceArray: firebaseViewModel.pieceArray)
         }
+        
     }
     
     func returnIconName(pieceTitle: String) -> String {
@@ -171,10 +190,10 @@ struct PieceSelectionView: View {
     }
 }
 
-//struct PieceSelectionView_Previews: PreviewProvider {
-//
-//    static var previews: some View {
-//        PieceSelectionView(selectedPiece: .constant(UserPiece(pieceTitle: "", composer: "", iconColor: "")), showPieceBottomSheet: .constant(true), pieceArray: [UserPiece(pieceTitle: "Piano Concerto No. 2", composer: "Chopin", iconColor: "blue"), UserPiece(pieceTitle: "Fugue", composer: "Bach", iconColor: "red")])
-//
-//    }
-//}
+struct PieceSelectionView_Previews: PreviewProvider {
+    
+    static var previews: some View {
+        PieceSelectionView(selectedPiece: .constant(UserPiece(pieceTitle: "", composer: "", iconColor: "")), showPieceBottomSheet: .constant(true), firebaseViewModel: FirebaseViewModel())
+        
+    }
+}

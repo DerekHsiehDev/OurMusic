@@ -19,6 +19,9 @@
 		4B889721269B80DF000A4B82 /* UserPiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B889720269B80DF000A4B82 /* UserPiece.swift */; };
 		4B889723269C0E9D000A4B82 /* PieceSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B889722269C0E9D000A4B82 /* PieceSelectionView.swift */; };
 		4B89C93926955E76007E722B /* PieceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B89C93826955E76007E722B /* PieceView.swift */; };
+		4BCBF68B26B46011009263AD /* DeletedPiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BCBF68A26B46011009263AD /* DeletedPiece.swift */; };
+		4BE8B72626B47416005F9AF2 /* ForgetPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BE8B72526B47416005F9AF2 /* ForgetPassword.swift */; };
+		4BE8B72926B4798C005F9AF2 /* SSToastMessage in Frameworks */ = {isa = PBXBuildFile; productRef = 4BE8B72826B4798C005F9AF2 /* SSToastMessage */; };
 		4BF8D7CB268AEBFB00E8799A /* CustomActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BF8D7CA268AEBFB00E8799A /* CustomActionSheet.swift */; };
 		4BF8D7CE268AEE1600E8799A /* BottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 4BF8D7CD268AEE1600E8799A /* BottomSheet */; };
 		6513FC57263239570094A6C2 /* PracticeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6513FC56263239570094A6C2 /* PracticeModel.swift */; };
@@ -63,6 +66,8 @@
 		4B889720269B80DF000A4B82 /* UserPiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPiece.swift; sourceTree = "<group>"; };
 		4B889722269C0E9D000A4B82 /* PieceSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieceSelectionView.swift; sourceTree = "<group>"; };
 		4B89C93826955E76007E722B /* PieceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieceView.swift; sourceTree = "<group>"; };
+		4BCBF68A26B46011009263AD /* DeletedPiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletedPiece.swift; sourceTree = "<group>"; };
+		4BE8B72526B47416005F9AF2 /* ForgetPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPassword.swift; sourceTree = "<group>"; };
 		4BF8D7CA268AEBFB00E8799A /* CustomActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomActionSheet.swift; sourceTree = "<group>"; };
 		6513FC56263239570094A6C2 /* PracticeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeModel.swift; sourceTree = "<group>"; };
 		6514C8CE2633E1CB007737D9 /* BarChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChart.swift; sourceTree = "<group>"; };
@@ -98,6 +103,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BE8B72926B4798C005F9AF2 /* SSToastMessage in Frameworks */,
 				14A5CC99A4DC613903BB13E5 /* Pods_PianoFly.framework in Frameworks */,
 				4BF8D7CE268AEE1600E8799A /* BottomSheet in Frameworks */,
 				65BA7C93263502DF008F18BA /* SwiftUICharts in Frameworks */,
@@ -193,6 +199,7 @@
 				6514C8CE2633E1CB007737D9 /* BarChart.swift */,
 				65BC65C82634EAB8002A3653 /* SignupView.swift */,
 				654020E52672E8EA00CDE8FD /* OnboardingView.swift */,
+				4BE8B72526B47416005F9AF2 /* ForgetPassword.swift */,
 				4BF8D7CA268AEBFB00E8799A /* CustomActionSheet.swift */,
 				4B889722269C0E9D000A4B82 /* PieceSelectionView.swift */,
 				4B3FCD5E268C2CA6006FF7BB /* NewPieceView.swift */,
@@ -228,6 +235,7 @@
 			children = (
 				657043EA26728A1E004D6005 /* Enums and Structs.swift */,
 				654020E726730F9000CDE8FD /* Extensions.swift */,
+				4BCBF68A26B46011009263AD /* DeletedPiece.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -272,6 +280,7 @@
 			packageProductDependencies = (
 				65BA7C92263502DF008F18BA /* SwiftUICharts */,
 				4BF8D7CD268AEE1600E8799A /* BottomSheet */,
+				4BE8B72826B4798C005F9AF2 /* SSToastMessage */,
 			);
 			productName = PianoFly;
 			productReference = 6528D114262E033D002C13E4 /* PianoFly.app */;
@@ -303,6 +312,7 @@
 			packageReferences = (
 				65BA7C91263502DF008F18BA /* XCRemoteSwiftPackageReference "ChartView" */,
 				4BF8D7CC268AEE1600E8799A /* XCRemoteSwiftPackageReference "bottom-sheet" */,
+				4BE8B72726B4798C005F9AF2 /* XCRemoteSwiftPackageReference "SSToastMessage" */,
 			);
 			productRefGroup = 6528D115262E033D002C13E4 /* Products */;
 			projectDirPath = "";
@@ -377,6 +387,7 @@
 			files = (
 				4BF8D7CB268AEBFB00E8799A /* CustomActionSheet.swift in Sources */,
 				6528D147262E3999002C13E4 /* PracticeLogView.swift in Sources */,
+				4BE8B72626B47416005F9AF2 /* ForgetPassword.swift in Sources */,
 				65D3EF1A267926C000F2CC16 /* PostModel.swift in Sources */,
 				6514C8CF2633E1CB007737D9 /* BarChart.swift in Sources */,
 				657043E8267285E8004D6005 /* SignInWithEmail.swift in Sources */,
@@ -385,6 +396,7 @@
 				4B29FC1826941EC70026B1D5 /* PieceModel.swift in Sources */,
 				4B29FC1A26941FCB0026B1D5 /* TopBarView.swift in Sources */,
 				65BC65C92634EAB8002A3653 /* SignupView.swift in Sources */,
+				4BCBF68B26B46011009263AD /* DeletedPiece.swift in Sources */,
 				4B4DF34C26843F57000642C3 /* FirebaseViewModel.swift in Sources */,
 				654020E12672BE5100CDE8FD /* SignInWithApple.swift in Sources */,
 				6513FC57263239570094A6C2 /* PracticeModel.swift in Sources */,
@@ -609,6 +621,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		4BE8B72726B4798C005F9AF2 /* XCRemoteSwiftPackageReference "SSToastMessage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SimformSolutionsPvtLtd/SSToastMessage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		4BF8D7CC268AEE1600E8799A /* XCRemoteSwiftPackageReference "bottom-sheet" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/weitieda/bottom-sheet.git";
@@ -628,6 +648,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4BE8B72826B4798C005F9AF2 /* SSToastMessage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4BE8B72726B4798C005F9AF2 /* XCRemoteSwiftPackageReference "SSToastMessage" */;
+			productName = SSToastMessage;
+		};
 		4BF8D7CD268AEE1600E8799A /* BottomSheet */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4BF8D7CC268AEE1600E8799A /* XCRemoteSwiftPackageReference "bottom-sheet" */;

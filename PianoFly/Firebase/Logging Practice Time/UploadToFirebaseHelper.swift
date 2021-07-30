@@ -27,7 +27,7 @@ class UploadToFirebaseHelper {
                     for document in snapshot.documents {
                         if let pieceTitle = document.documentID as? String,
                            let composer = document.get(DatabaseNewPieceField.composer) as? String,
-                            let iconColor = document.get(DatabaseNewPieceField.iconColor) as? String
+                           let iconColor = document.get(DatabaseNewPieceField.iconColor) as? String
                         {
                             let newPiece = UserPiece(pieceTitle: pieceTitle, composer: composer, iconColor: iconColor)
                             pieceArray.append(newPiece)
@@ -37,7 +37,7 @@ class UploadToFirebaseHelper {
                     handler(pieceArray)
                 }
             }
-        
+            
             
             
         }
@@ -105,10 +105,10 @@ class UploadToFirebaseHelper {
                             
                             // upload with piece
                             
-                          
                             
-                         
-
+                            
+                            
+                            
                             practiceREF.updateData(postData) { err in
                                 if let err = err {
                                     print(err.localizedDescription)
@@ -123,11 +123,32 @@ class UploadToFirebaseHelper {
                             
                         } else {
                             // upload without piece
+                            print("UPLOAD WITHOUT PIECEEEE")
+                            self.getSingleDocumentFromDatabase(userID: userID, postID: dateString) { postModel in
+                                let practiceREF = self.REF.document(userID).collection(FirestoreDocumentCollectionNames.practice).document(dateString)
+                                let pract = (postModel?.practiceMinutes ?? 0) + practiceMinutes
+                                print(pract)
+                                practiceREF.updateData(
+                                    [
+                                        DatabasePostField.practiceMinutes: pract
+                                    ]
+                                ) { err in
+                                    if let err = err {
+                                        print(err.localizedDescription)
+                                        handler(true)
+                                        return
+                                    } else {
+                                        print("SUCCESSFULLY UPDATED DOCUMENT")
+                                        handler(false)
+                                        return
+                                    }
+                                }
+                            }
                         }
-                      
-                  
+                        
+                        
                         // upload
-                       
+                        
                         
                         
                         
@@ -172,102 +193,102 @@ class UploadToFirebaseHelper {
                     }
                     
                     
-                 
+                    
                 }
             }
         }
     }
     
-//    func uploadPracticeLog(dateString: String, practiceMinutes: Int, piece: Piece?, handler: @escaping(_ isError: Bool, _ practiceMinutes: Int?,_ dateString: String?) ->()) {
-//        if let userID = userID {
-//
-//            // check if document exists
-//
-//            self.checkIfDocumentExistsInDatabase(userID: userID, postID: dateString) { doesExist in
-//                if doesExist {
-//                    // exists - update existing document
-//                    // first need to get document practice minutes
-//
-//                    self.getSingleDocumentFromDatabase(userID: userID, postID: dateString) { returnedPost in
-//                        if let returnedPost = returnedPost {
-//                            // update doucment practice minutes
-//                            let oldPracticeMinutes: Int = Int(returnedPost.practiceMinutes)!
-//                            let newPracticeMinutes: Int = oldPracticeMinutes + practiceMinutes
-//
-//                            // path
-//                            let practiceREF = self.REF.document(userID).collection(FirestoreDocumentCollectionNames.practice).document(dateString)
-//
-//                            let postData: [String: Any] = [
-//                                DatabasePostField.postID: dateString,
-//                                DatabasePostField.practiceMinutes: "\(newPracticeMinutes)",
-//                                DatabasePostField.dateCreated: FieldValue.serverTimestamp()
-//                            ]
-//
-//                            practiceREF.setData(postData) { error in
-//                                if let error = error {
-//                                    print("ERROR UPDATING DATA IN DOCUMENT, ERROR: \(error.localizedDescription): USERID: \(userID), POSTID: \(dateString)")
-//                                    handler(true, nil, nil)
-//                                    return
-//                                } else {
-//                                    print("SUCCESSFULLY UPDATED DATA IN DOCUMENT:  USERID: \(userID), POSTID: \(dateString)")
-//                                    handler(false, newPracticeMinutes, dateString)
-//                                    return
-//                                }
-//                            }
-//
-//                        }
-//                    }
-//
-//                } else {
-//                    // create new document
-//                    let practiceREF = self.REF.document(userID)
-//
-//                          let postData: [String: Any] = [
-//                              DatabasePostField.postID: dateString,
-//                              DatabasePostField.practiceMinutes: "\(practiceMinutes)",
-//                              DatabasePostField.dateCreated: FieldValue.serverTimestamp()
-//                          ]
-//
-//                          practiceREF.collection(FirestoreDocumentCollectionNames.practice).document(dateString).setData(postData) { error in
-//                              if let error = error {
-//                                  print("ERROR UPLAODING DATA TO POST DOCUMENT \(error)")
-//                                  handler(true, nil, nil)
-//                                  return
-//                              } else {
-//                                  handler(false, practiceMinutes, dateString)
-//                                  return
-//                              }
-//                          }
-//
-//                }
-//            }
-//
-//
-//
-//        } else {
-//            print("ERROR GETTING USER ID, USER MAY NOT BE SIGNED IN, SHOULD NEVER BE A PROBLEM")
-//            handler(true, nil, nil)
-//            return
-//        }
-//
-//    }
+    //    func uploadPracticeLog(dateString: String, practiceMinutes: Int, piece: Piece?, handler: @escaping(_ isError: Bool, _ practiceMinutes: Int?,_ dateString: String?) ->()) {
+    //        if let userID = userID {
+    //
+    //            // check if document exists
+    //
+    //            self.checkIfDocumentExistsInDatabase(userID: userID, postID: dateString) { doesExist in
+    //                if doesExist {
+    //                    // exists - update existing document
+    //                    // first need to get document practice minutes
+    //
+    //                    self.getSingleDocumentFromDatabase(userID: userID, postID: dateString) { returnedPost in
+    //                        if let returnedPost = returnedPost {
+    //                            // update doucment practice minutes
+    //                            let oldPracticeMinutes: Int = Int(returnedPost.practiceMinutes)!
+    //                            let newPracticeMinutes: Int = oldPracticeMinutes + practiceMinutes
+    //
+    //                            // path
+    //                            let practiceREF = self.REF.document(userID).collection(FirestoreDocumentCollectionNames.practice).document(dateString)
+    //
+    //                            let postData: [String: Any] = [
+    //                                DatabasePostField.postID: dateString,
+    //                                DatabasePostField.practiceMinutes: "\(newPracticeMinutes)",
+    //                                DatabasePostField.dateCreated: FieldValue.serverTimestamp()
+    //                            ]
+    //
+    //                            practiceREF.setData(postData) { error in
+    //                                if let error = error {
+    //                                    print("ERROR UPDATING DATA IN DOCUMENT, ERROR: \(error.localizedDescription): USERID: \(userID), POSTID: \(dateString)")
+    //                                    handler(true, nil, nil)
+    //                                    return
+    //                                } else {
+    //                                    print("SUCCESSFULLY UPDATED DATA IN DOCUMENT:  USERID: \(userID), POSTID: \(dateString)")
+    //                                    handler(false, newPracticeMinutes, dateString)
+    //                                    return
+    //                                }
+    //                            }
+    //
+    //                        }
+    //                    }
+    //
+    //                } else {
+    //                    // create new document
+    //                    let practiceREF = self.REF.document(userID)
+    //
+    //                          let postData: [String: Any] = [
+    //                              DatabasePostField.postID: dateString,
+    //                              DatabasePostField.practiceMinutes: "\(practiceMinutes)",
+    //                              DatabasePostField.dateCreated: FieldValue.serverTimestamp()
+    //                          ]
+    //
+    //                          practiceREF.collection(FirestoreDocumentCollectionNames.practice).document(dateString).setData(postData) { error in
+    //                              if let error = error {
+    //                                  print("ERROR UPLAODING DATA TO POST DOCUMENT \(error)")
+    //                                  handler(true, nil, nil)
+    //                                  return
+    //                              } else {
+    //                                  handler(false, practiceMinutes, dateString)
+    //                                  return
+    //                              }
+    //                          }
+    //
+    //                }
+    //            }
+    //
+    //
+    //
+    //        } else {
+    //            print("ERROR GETTING USER ID, USER MAY NOT BE SIGNED IN, SHOULD NEVER BE A PROBLEM")
+    //            handler(true, nil, nil)
+    //            return
+    //        }
+    //
+    //    }
     
     func deletePiece(documentID: String) {
         if let userID = userID {
             db.collection(FirestoreDocumentCollectionNames.pieces).document(userID).collection(FirestoreDocumentCollectionNames.myPieces).document(documentID).delete { err in
                 
-                   if let err = err {
-                       print(err.localizedDescription.uppercased())
-                       print("ERROR REMOVING DOCUMEBNT")
-                   } else {
-                       print("SUCCESSFULLY DELETED:\(documentID)")
-                   }
-               
+                if let err = err {
+                    print(err.localizedDescription.uppercased())
+                    print("ERROR REMOVING DOCUMEBNT")
+                } else {
+                    print("SUCCESSFULLY DELETED:\(documentID)")
+                }
+                
             }
         } else {
             print("NOT LOGGED IN")
         }
-  
+        
     }
     
     
@@ -279,7 +300,7 @@ class UploadToFirebaseHelper {
         practiceREF.order(by: DatabasePostField.postID, descending: false).limit(to: 31).getDocuments { querySnapshot, error in
             if let snapshot = querySnapshot, snapshot.documents.count > 0 {
                 for document in snapshot.documents {
-          
+                    
                     let documentData = document.data()
                     
                     var postID: String = ""
@@ -304,7 +325,7 @@ class UploadToFirebaseHelper {
                     
                     let newPost = PostModel(postID: postID, practiceMinutes: practiceMinutes, dateCreated: dateCreated, pieces: pieces)
                     
-                        postArray.append(newPost)
+                    postArray.append(newPost)
                     
                 }
                 handler(postArray)
@@ -335,7 +356,7 @@ class UploadToFirebaseHelper {
                 var practiceMinutes: Int = 0
                 var dateCreated: Date = Date()
                 var pieces: [String: Int] = [:]
-                    
+                
                 print("doucment exists")
                 print("POST")
                 for data in documentData! {
@@ -356,33 +377,33 @@ class UploadToFirebaseHelper {
                 
                 postModel = PostModel(postID: postID, practiceMinutes: practiceMinutes, dateCreated: dateCreated, pieces: pieces)
                 handler(postModel)
-
+                
             } else {
                 print("Document does not exist")
                 handler(postModel)
             }
         }
         
-     
+        
         
         return
-//        docREF.getDocument { document, error in
-//            if let document = document {
-//
-//                if let postID = document.documentID as? String, let practiceMinutes = document.get(DatabasePostField.practiceMinutes) as? String, let dateTimestamp = document.get(DatabasePostField.dateCreated) as? Timestamp {
-//                    let newPost = PostModel(postID: postID, practiceMinutes: practiceMinutes, dateCreated: dateTimestamp.dateValue())
-//                    handler(newPost)
-//                    return
-//                } else {
-//                    handler(nil)
-//                    return
-//                }
-//
-//            } else {
-//                handler(nil)
-//                return
-//            }
-//        }
+        //        docREF.getDocument { document, error in
+        //            if let document = document {
+        //
+        //                if let postID = document.documentID as? String, let practiceMinutes = document.get(DatabasePostField.practiceMinutes) as? String, let dateTimestamp = document.get(DatabasePostField.dateCreated) as? Timestamp {
+        //                    let newPost = PostModel(postID: postID, practiceMinutes: practiceMinutes, dateCreated: dateTimestamp.dateValue())
+        //                    handler(newPost)
+        //                    return
+        //                } else {
+        //                    handler(nil)
+        //                    return
+        //                }
+        //
+        //            } else {
+        //                handler(nil)
+        //                return
+        //            }
+        //        }
         
         
         

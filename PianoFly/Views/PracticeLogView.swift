@@ -91,8 +91,14 @@ struct PracticeLogView: View {
                             } else {
                                 print("SUCCESSFULLY UPLOADED POST TO FIREDB")
                                 // FIREBASE.UPDATE
+                                for log in firebaseViewModel.lastSevenDaysLog {
+                                    if log.postID == DateHelper.instance.convertDateToCustomString(dateToConvert: Date()) {
+                                        firebaseViewModel.updateSevenDayLog(dateString: currentDate, practiceMinutes: practiceMinutes, piece: selectedPiece.pieceTitle == "" ? nil : selectedPiece)
+                                        return
+                                    }
+                                }
+                                firebaseViewModel.getPracticeLog()
                                 
-                                firebaseViewModel.updateSevenDayLog(dateString: currentDate, practiceMinutes: practiceMinutes, piece: selectedPiece.pieceTitle == "" ? nil : selectedPiece)
                                 // get data from db
 
 //                                if let userID = userID {
@@ -149,6 +155,8 @@ struct PracticeLogView: View {
         .padding(.bottom, 35)
         .bottomSheet(isPresented: $showPieceBottomSheet, height: calculateBottomSheetHeight()) {
             PieceSelectionView(selectedPiece: $selectedPiece, showPieceBottomSheet: $showPieceBottomSheet, firebaseViewModel: firebaseViewModel)
+                .padding()
+                .padding(.bottom)
         }
         
         
@@ -169,7 +177,7 @@ struct PracticeLogView: View {
             return UIScreen.main.bounds.height
             
         } else {
-            return CGFloat(firebaseViewModel.pieceArray.count * 170)
+            return CGFloat(firebaseViewModel.pieceArray.count * 170) + 100
         }
         
       

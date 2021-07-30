@@ -9,7 +9,6 @@ import SwiftUI
 import BottomSheet
 
 struct ContentView: View {
-    
     @State var isShowingFormView: Bool = false
     @StateObject var firebaseViewModel = FirebaseViewModel()
     @State var index = 0
@@ -42,7 +41,7 @@ struct ContentView: View {
                             .opacity(self.index == 1 ? 1 : 0)
                       
                         
-                        SettingsView(index: $index)
+                        SettingsView(index: $index, firebaseViewModel: firebaseViewModel)
                             .opacity(self.index == 3 ? 1 : 0)
                             
                     }
@@ -63,7 +62,19 @@ struct ContentView: View {
 //                firebaseViewModel.getFullPracticeLog(userID: userID!) { isFinished in
 //                        print("FETCHED ALL USER POSTS")
 //                }
-                firebaseViewModel.getAllPieces()
+                firebaseViewModel.retrievePieceArrayFromUserDefaults { pieceArray in
+                    print(pieceArray)
+                    if pieceArray.isEmpty {
+                        print("empty")
+                        firebaseViewModel.getAllPieces()
+                    } else {
+                        print("getting practice log")
+                        
+                            firebaseViewModel.getPracticeLog()
+                        
+                        
+                    }
+                }
                 
                 
             }
