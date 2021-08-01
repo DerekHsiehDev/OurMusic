@@ -41,7 +41,7 @@ struct ContentView: View {
                             .opacity(self.index == 1 ? 1 : 0)
                       
                         
-                        SettingsView(index: $index, firebaseViewModel: firebaseViewModel)
+                        SettingsView(firebaseViewModel: firebaseViewModel, index: $index)
                             .opacity(self.index == 3 ? 1 : 0)
                             
                     }
