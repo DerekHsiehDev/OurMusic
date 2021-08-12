@@ -24,7 +24,7 @@ struct TabView: View {
                 VStack(spacing: 10) {
                     Image(systemName: index == 0 ? "house.fill" : "house")
                         .foregroundColor(Color.MyTheme.DarkPurple.opacity(index == 0 ? 1 : 0.45))
-                        .font(.system(size: 35))
+                        .font(.system(size: 30))
                     
                     Circle()
                         .fill(Color.MyTheme.DarkPurple.opacity(index == 0 ? 1 : 0))
@@ -43,7 +43,7 @@ struct TabView: View {
                 VStack(spacing: 10) {
                     Image(systemName: "calendar")
                         .foregroundColor(Color.MyTheme.DarkPurple.opacity(index == 1 ? 1 : 0.45))
-                        .font(.system(size: 35))
+                        .font(.system(size: 30))
                     
                     Circle()
                         .fill(Color.MyTheme.DarkPurple.opacity(index == 1 ? 1 : 0))
@@ -63,7 +63,7 @@ struct TabView: View {
                 VStack(spacing: 10) {
                     Image(systemName: "studentdesk")
                         .foregroundColor(Color.MyTheme.DarkPurple.opacity(index == 2 ? 1 : 0.45))
-                        .font(.system(size: 35))
+                        .font(.system(size: 30))
                     
                     Circle()
                         .fill(Color.MyTheme.DarkPurple.opacity(index == 2 ? 1 : 0))
@@ -83,7 +83,7 @@ struct TabView: View {
                 VStack(spacing: 10) {
                     Image(systemName: index == 3 ? "gearshape.fill" : "gearshape")
                         .foregroundColor(Color.MyTheme.DarkPurple.opacity(index == 3 ? 1 : 0.45))
-                        .font(.system(size: 35))
+                        .font(.system(size: 30))
                     
                     Circle()
                         .fill(Color.MyTheme.DarkPurple.opacity(index == 3 ? 1 : 0))

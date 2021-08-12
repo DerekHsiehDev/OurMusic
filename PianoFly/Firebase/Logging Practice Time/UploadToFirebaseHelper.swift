@@ -172,6 +172,7 @@ class UploadToFirebaseHelper {
                                 return
                             } else {
                                 // SHOULD UPDATE FIRESTORE VIEW MODEL HERE!!!!!!!!!!
+                                handler(false)
                             }
                         }
                     } else {
@@ -188,6 +189,7 @@ class UploadToFirebaseHelper {
                                 return
                             } else {
                                 // SHOULD UPDATE FIRESTORE VIEW MODEL HERE!!!!!!!!!!
+                                handler(false)
                             }
                         }
                     }

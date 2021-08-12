@@ -23,6 +23,7 @@ struct ForgetPassword: View {
                 TextField("Email", text: $emailText)
 //                    .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
+                    .keyboardType(.emailAddress)
                     .background(Color.gray.opacity(0.3).cornerRadius(10))
                     .foregroundColor(.black)
                     .font(.headline)

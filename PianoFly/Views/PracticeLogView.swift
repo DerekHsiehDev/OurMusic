@@ -86,18 +86,40 @@ struct PracticeLogView: View {
 
                         // send to database: id = currentDate, practiceMinutes = practiceMinutes, date = now
                         UploadToFirebaseHelper.instance.uploadPracticeLog(dateString: currentDate, practiceMinutes: practiceMinutes, piece: selectedPiece.pieceTitle == "" ? nil : selectedPiece) { isError  in
+                            
+                            print("STARTING")
+                            if selectedPiece.pieceTitle != "" {
+                                let postModel = PostModel(id: UUID(), postID: DateHelper.instance.convertDateToCustomString(dateToConvert: Date()), practiceMinutes: practiceMinutes, dateCreated: Date(), pieces: [selectedPiece.pieceTitle: practiceMinutes])
+                                firebaseViewModel.lastSevenDaysLog.append(postModel)
+                            } else {
+                                let postModel = PostModel(id: UUID(), postID: DateHelper.instance.convertDateToCustomString(dateToConvert: Date()), practiceMinutes: practiceMinutes, dateCreated: Date())
+                                firebaseViewModel.lastSevenDaysLog.append(postModel)
+                            }
+
+                            
+                            
                             if isError {
                                 print("ERROR")
                             } else {
+                                
                                 print("SUCCESSFULLY UPLOADED POST TO FIREDB")
                                 // FIREBASE.UPDATE
+                                
+                                
+                                
                                 for log in firebaseViewModel.lastSevenDaysLog {
                                     if log.postID == DateHelper.instance.convertDateToCustomString(dateToConvert: Date()) {
                                         firebaseViewModel.updateSevenDayLog(dateString: currentDate, practiceMinutes: practiceMinutes, piece: selectedPiece.pieceTitle == "" ? nil : selectedPiece)
+                                        print(firebaseViewModel.lastSevenDaysLog)
                                         return
                                     }
                                 }
-                                firebaseViewModel.getPracticeLog()
+                                
+                               
+                                
+                      
+                         
+                               
                                 
                                 // get data from db
 
@@ -112,6 +134,9 @@ struct PracticeLogView: View {
 //                                    print("NO USER ID FOUND")
 //                                    return
 //                                }
+                                
+                           
+                                
                             }
                         }
                     }

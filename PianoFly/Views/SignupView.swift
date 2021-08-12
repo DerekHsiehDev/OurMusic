@@ -207,7 +207,7 @@ struct Home : View {
             ForgetPassword(showPassToast: $showPassResetToast, showAlert: $showResetPasswordAlert)
         }
         .present(isPresented: self.$showPassResetToast, type: .floater(), position: .top,  animation: Animation.spring(), closeOnTapOutside: true) {
-                 self.createTopFloaterView()
+            TopFloaterView().createTopFloaterView(errMsg: "Sent password reset to your email")
              }
 
         
@@ -215,29 +215,6 @@ struct Home : View {
     
     // MARK: FUNCTIONS
     
-    func createTopFloaterView() -> some View {
-        VStack(alignment: .center) {
-            
-             Text("Sent password reset to your email")
-                .foregroundColor(.black)
-                .bold()
-                .font(.title2)
-            
-//            ZStack(alignment: .leading) {
-//                Capsule()
-//                    .frame(width: capsuleWidth, height: 5)
-////                    .foregroundColor(Color(returnColorForTotalWorkTime(totalWorkTime: WorkMinutesTotal)[0]))
-//                Capsule()
-//                    .frame(width: CGFloat(Double(WorkMinutesTotal) / Double(WorkMinutesTotal + returnMinutesUntilNextRank(totalWorkTime: WorkMinutesTotal))) * capsuleWidth, height: 5)
-//                    .foregroundColor(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)))
-//            }
-            
-        }
-        .frame(width: UIScreen.main.bounds.width - 30, height: 100)
-        .background(Color.white.opacity(0.8))
-        .cornerRadius(15)
-        .shadow(color: Color.black.opacity(0.8), radius: 0.25, x: 0, y: 0)
-    }
     
     func connectToFirebase(name: String, email: String, provider: String, credential: AuthCredential) {
         
